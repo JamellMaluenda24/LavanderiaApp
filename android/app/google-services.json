@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1058742294853",
+    "project_id": "lavanderia-el-cobre",
+    "storage_bucket": "lavanderia-el-cobre.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058742294853:android:42bbe1bba186ad870bc62c",
+        "android_client_info": {
+          "package_name": "com.lavanderiaapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEgqGXZp3i8Bn4iKpB83vxPggdRajmy9s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

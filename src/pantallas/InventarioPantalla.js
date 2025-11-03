@@ -1,16 +1,28 @@
+// Pantalla: Inventario de Insumos
+// Esta pantalla muestra el inventario completo obtenido desde Firestore.
+// Permite buscar insumos por nombre y visualizar su estado de stock mediante colores.
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { firestore } from '../servicios/firebase';
 
 export default function InventarioPantalla({ navigation }) {
+  // Estado que almacena los insumos obtenidos desde Firestore
   const [insumos, setInsumos] = useState([]);
+
+  // Estado para el texto del buscador
   const [busqueda, setBusqueda] = useState('');
+
+  // Estado de carga para mostrar indicador mientras se obtienen los datos
   const [cargando, setCargando] = useState(true);
 
+  // useEffect: se ejecuta al montar el componente
   useEffect(() => {
+    // Escucha en tiempo real los cambios de la colección "inventario"
     const unsubscribe = firestore()
-      .collection('inventario') // 👈 Ajusta si tu colección se llama diferente
+      .collection('inventario') // Cambiar si la colección tiene otro nombre
       .onSnapshot(snapshot => {
+        // Mapea los documentos obtenidos y guarda sus datos en el estado
         const lista = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
@@ -19,35 +31,43 @@ export default function InventarioPantalla({ navigation }) {
         setCargando(false);
       });
 
+    // Detiene la suscripción al desmontar el componente
     return unsubscribe;
   }, []);
 
+  // Filtra los insumos según el texto ingresado en la búsqueda
   const filtrarInsumos = () => {
     return insumos.filter(i =>
       i.nombre.toLowerCase().includes(busqueda.toLowerCase())
     );
   };
 
+  // Define el color del estado según la cantidad disponible
   const obtenerColorStock = cantidad => {
-    if (cantidad > 50) return '#4caf50'; // verde
-    if (cantidad > 20) return '#ffb84d'; // dorado
-    return '#ff4d4d'; // rojo
+    if (cantidad > 50) return '#4caf50'; // Verde: nivel óptimo
+    if (cantidad > 20) return '#ffb84d'; // Dorado: nivel bajo
+    return '#ff4d4d'; // Rojo: nivel crítico
   };
 
+  // Muestra indicador de carga mientras los datos se obtienen
   if (cargando) {
     return (
       <View style={[estilos.fondo, { justifyContent: 'center' }]}>
         <ActivityIndicator size="large" color="#fff" />
-        <Text style={{ textAlign: 'center', color: '#fff', marginTop: 10 }}>Cargando inventario...</Text>
+        <Text style={{ textAlign: 'center', color: '#fff', marginTop: 10 }}>
+          Cargando inventario...
+        </Text>
       </View>
     );
   }
 
+  // Vista principal del inventario
   return (
     <View style={estilos.fondo}>
       <View style={estilos.contenedor}>
         <Text style={estilos.titulo}>Inventario de Insumos</Text>
 
+        {/* Campo de búsqueda */}
         <TextInput
           placeholder="Buscar insumo..."
           placeholderTextColor="rgba(255,255,255,0.6)"
@@ -56,6 +76,7 @@ export default function InventarioPantalla({ navigation }) {
           style={estilos.entrada}
         />
 
+        {/* Lista de insumos */}
         <FlatList
           data={filtrarInsumos()}
           keyExtractor={item => item.id}
@@ -64,9 +85,14 @@ export default function InventarioPantalla({ navigation }) {
               <View style={estilos.itemTexto}>
                 <Text style={estilos.itemNombre}>{item.nombre}</Text>
                 <Text style={estilos.itemCantidad}>
-                  Cantidad: <Text style={{ color: obtenerColorStock(item.cantidad) }}>{item.cantidad}</Text>
+                  Cantidad:{' '}
+                  <Text style={{ color: obtenerColorStock(item.cantidad) }}>
+                    {item.cantidad}
+                  </Text>
                 </Text>
               </View>
+
+              {/* Indicador visual del estado del stock */}
               <View
                 style={[
                   estilos.estado,
@@ -77,6 +103,7 @@ export default function InventarioPantalla({ navigation }) {
           )}
         />
 
+        {/* Botón para volver atrás */}
         <TouchableOpacity
           style={estilos.botonSecundario}
           onPress={() => navigation.goBack()}
@@ -88,15 +115,16 @@ export default function InventarioPantalla({ navigation }) {
   );
 }
 
+// Estilos de la interfaz visual
 const estilos = StyleSheet.create({
   fondo: {
     flex: 1,
-    backgroundColor: '#ff6b35',
+    backgroundColor: '#ff6b35', // Fondo naranja principal
     paddingVertical: 40,
   },
   contenedor: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.25)',
+    backgroundColor: 'rgba(0,0,0,0.25)', // Fondo con transparencia
     marginHorizontal: 20,
     borderRadius: 16,
     padding: 20,

@@ -1,13 +1,28 @@
+// Pantalla principal del operario — InicioPantalla.tsx
+// Muestra el menú principal y permite cerrar sesión correctamente.
+
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { auth } from '../servicios/firebase';
 
 export default function InicioPantalla({ navigation }) {
   const usuario = auth().currentUser;
 
+  //  Cierra la sesión y redirige al menú de login
   const cerrarSesion = async () => {
-    await auth().signOut();
-    navigation.replace('Login');
+    try {
+      await auth().signOut(); // Cierra sesión en Firebase
+      Alert.alert('Sesión cerrada', 'Has cerrado sesión correctamente.');
+
+      //  Reinicia la navegación para evitar volver con "atrás"
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'InicioSesion' }], // 🔹 Asegúrate de que el nombre coincide con tu pantalla de login
+      });
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+      Alert.alert('Error', 'No se pudo cerrar sesión. Intenta nuevamente.');
+    }
   };
 
   return (

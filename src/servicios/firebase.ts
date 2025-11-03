@@ -1,10 +1,16 @@
-// archivo firebase.ts 
+// src/servicios/firebase.ts
+// Configuración automática de Firebase para React Native
 
-import { FirebaseApp, initializeApp } from '@react-native-firebase/app';
+import { firebase } from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-// Inicializa Firebase automáticamente usando google-services.json
-const app: FirebaseApp = initializeApp();
+// Verifica si Firebase está inicializado
+if (!firebase.apps.length) {
+  firebase.initializeApp();
+  console.log('Firebase inicializado correctamente');
+} else {
+  console.log(' Firebase ya estaba inicializado');
+}
 
-export { app, auth, firestore };
+export { firebase, auth, firestore };

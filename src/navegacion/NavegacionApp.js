@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import InicioSesionPantalla from '../pantallas/InicioSesionPantalla';
 import RegistroPantalla from '../pantallas/RegistroPantalla';
 import InicioPantalla from '../pantallas/InicioPantalla';
-import AdminPantalla from '../pantallas/AdminPantallaInicio';
 
 // Pantallas del Operario
 import RegistroConsumoPantalla from '../pantallas/RegistroConsumoPantalla';
@@ -14,8 +13,7 @@ import InventarioPantalla from '../pantallas/InventarioPantalla';
 import AlertasPantalla from '../pantallas/AlertasPantalla';
 
 // Pantallas del admin
-
-
+import AdminPantalla from '../pantallas/AdminPantallaInicio';
 
 
 const Stack = createNativeStackNavigator();

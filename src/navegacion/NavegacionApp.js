@@ -12,9 +12,15 @@ import RegistroConsumoPantalla from '../pantallas/RegistroConsumoPantalla';
 import InventarioPantalla from '../pantallas/InventarioPantalla';
 import AlertasPantalla from '../pantallas/AlertasPantalla';
 
-// Pantallas del admin
-import AdminPantalla from '../pantallas/AdminPantallaInicio';
-
+// Pantallas del Administrador
+import AdminPantalla from '../pantallas/AdminPantalla';
+import ReportesInsumos from '../pantallas/ReportesInsumos';
+import ListaProveedores from '../pantallas/ListaProveedores';
+import AprobarPedidos from '../pantallas/AprobarPedidos';
+import AgregarProveedor from '../pantallas/AgregarProveedor';
+import GestionProveedores from '../pantallas/GestionProveedores';
+import EditarProveedor from '../pantallas/EditarProveedor';
+import InventarioAdmin from '../pantallas/InventarioAdmin';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +77,43 @@ export default function NavegacionApp() {
           component={AdminPantalla}
           options={{ title: 'Panel de Administración' }}
         />
+
+        {/* Funcionalidades del Administrador */}
+        <Stack.Screen
+          name="InventarioAdmin"
+          component={InventarioAdmin}
+          options={{ title: 'Inventario de insumos' }}
+        />
+        <Stack.Screen
+          name="GestionProveedores"
+          component={GestionProveedores}
+          options={{ title: 'Gestión Proveedores' }}
+        />
+        <Stack.Screen
+          name="ReportesInsumos"
+          component={ReportesInsumos}
+          options={{ title: 'Reportes de Insumos' }}
+        />
+        <Stack.Screen
+          name="ListaProveedores"
+          component={ListaProveedores}
+          options={{ title: 'Lista Proveedores' }}
+        />
+        <Stack.Screen
+          name="AgregarProveedor"
+          component={AgregarProveedor}
+          options={{ title: 'Agregar Proveedor' }}
+        />  
+        <Stack.Screen
+          name="EditarProveedor"
+          component={EditarProveedor}
+          options={{ title: 'Editar información de proveedor' }}
+        />
+        <Stack.Screen
+          name="AprobarPedidos"
+          component={AprobarPedidos}
+          options={{ title: 'Aprobar / Rechazar Pedidos' }}
+        />  
       </Stack.Navigator>
     </NavigationContainer>
   );

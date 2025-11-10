@@ -22,11 +22,7 @@ export default function GestionProveedores({ route, navigation }) {
     );
   }
 
-<<<<<<< HEAD:src/pantallas/GestionProveedores.js
-  //Cargar todos los pedidos aprobados por el admin
-=======
   // Cargar todos los pedidos aprobados relacionados con el proveedor
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/GestionProveedores.js
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('pedidos')
@@ -51,20 +47,12 @@ export default function GestionProveedores({ route, navigation }) {
     return () => unsubscribe();
   }, [proveedor.id]);
 
-<<<<<<< HEAD:src/pantallas/GestionProveedores.js
-
-=======
   // Editar proveedor
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/GestionProveedores.js
   const editarProveedor = () => {
     navigation.navigate('EditarProveedor', { proveedorId: proveedor.id });
   };
 
-<<<<<<< HEAD:src/pantallas/GestionProveedores.js
-
-=======
   // Eliminar proveedor
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/GestionProveedores.js
   const eliminarProveedor = async () => {
     Alert.alert(
       'Confirmar eliminación',

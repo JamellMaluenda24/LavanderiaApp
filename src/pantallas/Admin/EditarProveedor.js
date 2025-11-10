@@ -10,11 +10,7 @@ import {
 import { firestore } from '../../servicios/firebase';
 
 export default function EditarProveedor({ route, navigation }) {
-<<<<<<< HEAD:src/pantallas/EditarProveedor.js
-  const { proveedorId } = route.params || {}; 
-=======
   const { proveedorId } = route.params || {}; // evita crash si no hay params
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/EditarProveedor.js
 
   const [nombre, setNombre] = useState('');
   const [ciudad, setCiudad] = useState('');
@@ -66,11 +62,7 @@ export default function EditarProveedor({ route, navigation }) {
     try {
       await firestore().collection('proveedores').doc(proveedorId).set(
         { nombre, ciudad, direccion, telefono, correo },
-<<<<<<< HEAD:src/pantallas/EditarProveedor.js
-        { merge: true } 
-=======
         { merge: true } // actualiza o crea si no existe
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/EditarProveedor.js
       );
 
       Alert.alert('Éxito', 'Proveedor actualizado correctamente.');

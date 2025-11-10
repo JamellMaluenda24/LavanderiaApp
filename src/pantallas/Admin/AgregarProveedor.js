@@ -54,10 +54,7 @@ export default function AgregarProveedor() {
 
       Alert.alert('Éxito', `Proveedor "${nombre}" registrado correctamente.`);
 
-<<<<<<< HEAD:src/pantallas/AgregarProveedor.js
-=======
       // Limpiar campos del formulario
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AgregarProveedor.js
       setNombre('');
       setTelefono('');
       setDireccion('');

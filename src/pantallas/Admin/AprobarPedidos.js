@@ -10,11 +10,8 @@ export default function AprobarPedidos() {
   const [pedidos, setPedidos] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
-  //Cargar de pedidos pendientes desde Firestore
-=======
+  // ------------------- CARGAR PEDIDOS -------------------
   // Cargar pedidos pendientes desde Firestore
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('pedidos')
@@ -38,10 +35,7 @@ export default function AprobarPedidos() {
     return () => unsubscribe();
   }, []);
 
-<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
-=======
-  // Aprobar pedido y actualizar inventario
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
+  // ------------------- APROBAR PEDIDO -------------------
   const aprobarPedido = async (pedidoId, insumos) => {
     try {
       const batch = firestore().batch();
@@ -64,11 +58,7 @@ export default function AprobarPedidos() {
         }
       }
 
-<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
-  
-=======
       // Cambiar estado del pedido
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
       const pedidoRef = firestore().collection('pedidos').doc(pedidoId);
       batch.update(pedidoRef, { estado: 'aprobado' });
 
@@ -80,11 +70,7 @@ export default function AprobarPedidos() {
     }
   };
 
-<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
-
-=======
-  // Rechazar pedido
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
+  // ------------------- RECHAZAR PEDIDO -------------------
   const rechazarPedido = async (pedidoId) => {
     try {
       await firestore().collection('pedidos').doc(pedidoId).update({ estado: 'rechazado' });
@@ -95,11 +81,7 @@ export default function AprobarPedidos() {
     }
   };
 
-<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
-
-=======
-  // Pantalla de carga
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
+  // ------------------- ESTADOS DE CARGA -------------------
   if (cargando) {
     return (
       <View style={styles.cargando}>
@@ -118,7 +100,7 @@ export default function AprobarPedidos() {
     );
   }
 
-  // Render principal
+  // ------------------- INTERFAZ VISUAL -------------------
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Aprobar Pedidos</Text>
@@ -164,11 +146,7 @@ export default function AprobarPedidos() {
   );
 }
 
-<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
-
-=======
-// Estilos visuales
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
+// ################################## ESTILOS VISUALES ##################################
 const styles = StyleSheet.create({
   container: {
     flex: 1,

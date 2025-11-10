@@ -10,10 +10,7 @@ export default function ListaProveedores({ navigation }) {
   const [proveedores, setProveedores] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-<<<<<<< HEAD:src/pantallas/ListaProveedores.js
-=======
-  //Cargar proveedores en tiempo real desde Firestore
->>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/ListaProveedores.js
+  // Cargar proveedores en tiempo real desde Firestore
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('proveedores')
@@ -36,7 +33,7 @@ export default function ListaProveedores({ navigation }) {
     return () => unsubscribe();
   }, []);
 
-  //Ver detalles del proveedor seleccionado
+  // Ver detalles del proveedor seleccionado
   const verProveedor = (proveedor) => {
     navigation.navigate('GestionProveedores', { proveedor });
   };

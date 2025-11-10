@@ -1,11 +1,20 @@
-// src/pantallas/InventarioAdmin.js
+// ===============================================
+// Pantalla de Inventario de Insumos (Administrador)
+// ===============================================
+
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { firestore } from '../servicios/firebase';
+import { 
+  View, Text, FlatList, StyleSheet, TouchableOpacity, Alert 
+} from 'react-native';
+import { firestore } from '../../servicios/firebase';
 
 export default function InventarioAdmin() {
   const [inventario, setInventario] = useState([]);
 
+<<<<<<< HEAD:src/pantallas/InventarioAdmin.js
+=======
+  // Escuchar inventario en tiempo real desde Firestore
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/InventarioAdmin.js
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('inventario')
@@ -17,11 +26,18 @@ export default function InventarioAdmin() {
           }));
           setInventario(data);
 
+<<<<<<< HEAD:src/pantallas/InventarioAdmin.js
           //Mostrar alerta si hay insumos bajo el mínimo
+=======
+          // Mostrar alerta si hay insumos bajo el mínimo
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/InventarioAdmin.js
           const bajos = data.filter(item => item.stock <= (item.minimo || 2));
           if (bajos.length > 0) {
             const nombres = bajos.map(i => i.nombre).join(', ');
-            Alert.alert('⚠️ Stock bajo', `Los siguientes insumos están por debajo del mínimo:\n${nombres}`);
+            Alert.alert(
+              'Stock bajo',
+              `Los siguientes insumos están por debajo del mínimo:\n${nombres}`
+            );
           }
         },
         error => {
@@ -33,7 +49,11 @@ export default function InventarioAdmin() {
     return () => unsubscribe();
   }, []);
 
+<<<<<<< HEAD:src/pantallas/InventarioAdmin.js
   //Aumentar stock manualmente
+=======
+  // Aumentar stock manualmente
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/InventarioAdmin.js
   const aumentarStock = async (id, stockActual) => {
     try {
       await firestore().collection('inventario').doc(id).update({
@@ -45,7 +65,11 @@ export default function InventarioAdmin() {
     }
   };
 
+<<<<<<< HEAD:src/pantallas/InventarioAdmin.js
   //Disminuir stock manualmente
+=======
+  // Disminuir stock manualmente
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/InventarioAdmin.js
   const disminuirStock = async (id, stockActual) => {
     if (stockActual <= 0) return;
     try {
@@ -85,7 +109,7 @@ export default function InventarioAdmin() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>📦 Inventario de Insumos</Text>
+      <Text style={styles.titulo}>Inventario de Insumos</Text>
       <FlatList
         data={inventario}
         keyExtractor={(item) => item.id}

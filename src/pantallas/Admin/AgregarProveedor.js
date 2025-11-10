@@ -1,23 +1,42 @@
+// ===============================================
+// Pantalla de Agregar Proveedor
+// ===============================================
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView, FlatList } from 'react-native';
-import { firestore } from '../servicios/firebase';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  FlatList,
+} from 'react-native';
+import { firestore } from '../../servicios/firebase';
 
 export default function AgregarProveedor() {
+  // ------------------- ESTADOS -------------------
+  // Campos de formulario del nuevo proveedor
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [direccion, setDireccion] = useState('');
   const [ciudad, setCiudad] = useState('');
   const [correo, setCorreo] = useState('');
 
-  const [historial, setHistorial] = useState([]); // Para mostrar proveedores agregados en esta sesión
+  // Historial local de proveedores registrados en la sesión actual
+  const [historial, setHistorial] = useState([]);
 
+  // ------------------- FUNCIÓN PRINCIPAL -------------------
+  // Registra un nuevo proveedor en Firestore y lo agrega al historial local
   const registrarProveedor = async () => {
+    // Validar que los campos obligatorios estén completos
     if (!nombre || !telefono || !direccion || !ciudad) {
       Alert.alert('Error', 'Debes completar todos los campos obligatorios.');
       return;
     }
 
     try {
+      // Crear objeto con los datos del proveedor
       const nuevoProveedor = {
         nombre,
         telefono,
@@ -27,14 +46,18 @@ export default function AgregarProveedor() {
         fechaRegistro: new Date().toLocaleDateString(),
       };
 
-      // Guardar en Firebase
+      // Guardar en Firestore
       await firestore().collection('proveedores').add(nuevoProveedor);
 
-      // Actualizar historial local
+      // Agregar al historial local
       setHistorial(prev => [...prev, { id: Date.now().toString(), ...nuevoProveedor }]);
 
       Alert.alert('Éxito', `Proveedor "${nombre}" registrado correctamente.`);
 
+<<<<<<< HEAD:src/pantallas/AgregarProveedor.js
+=======
+      // Limpiar campos del formulario
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AgregarProveedor.js
       setNombre('');
       setTelefono('');
       setDireccion('');
@@ -46,10 +69,13 @@ export default function AgregarProveedor() {
     }
   };
 
+  // ------------------- INTERFAZ VISUAL -------------------
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      {/* Título principal */}
       <Text style={styles.titulo}>Agregar Proveedor</Text>
 
+      {/* Campo: Nombre */}
       <Text style={styles.label}>Nombre del proveedor *</Text>
       <TextInput
         style={styles.input}
@@ -58,6 +84,7 @@ export default function AgregarProveedor() {
         onChangeText={setNombre}
       />
 
+      {/* Campo: Ciudad */}
       <Text style={styles.label}>Ciudad *</Text>
       <TextInput
         style={styles.input}
@@ -66,6 +93,7 @@ export default function AgregarProveedor() {
         onChangeText={setCiudad}
       />
 
+      {/* Campo: Dirección */}
       <Text style={styles.label}>Dirección *</Text>
       <TextInput
         style={styles.input}
@@ -74,6 +102,7 @@ export default function AgregarProveedor() {
         onChangeText={setDireccion}
       />
 
+      {/* Campo: Teléfono */}
       <Text style={styles.label}>Teléfono *</Text>
       <TextInput
         style={styles.input}
@@ -83,6 +112,7 @@ export default function AgregarProveedor() {
         keyboardType="phone-pad"
       />
 
+      {/* Campo: Correo (opcional) */}
       <Text style={styles.label}>Correo electrónico (opcional)</Text>
       <TextInput
         style={styles.input}
@@ -92,11 +122,14 @@ export default function AgregarProveedor() {
         keyboardType="email-address"
       />
 
+      {/* Botón principal para guardar */}
       <TouchableOpacity style={styles.boton} onPress={registrarProveedor}>
         <Text style={styles.textoBoton}>Guardar Proveedor</Text>
       </TouchableOpacity>
 
+      {/* Sección del historial local */}
       <Text style={styles.subtitulo}>Proveedores agregados esta sesión</Text>
+
       {historial.length === 0 ? (
         <Text style={styles.noHistorial}>No hay proveedores registrados aún.</Text>
       ) : (
@@ -116,6 +149,7 @@ export default function AgregarProveedor() {
   );
 }
 
+// ################################## ESTILOS VISUALES ##################################
 const styles = StyleSheet.create({
   container: {
     padding: 20,
@@ -127,7 +161,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#e85d2e',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   label: {
     fontSize: 15,

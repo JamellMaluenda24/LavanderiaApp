@@ -1,12 +1,19 @@
-// src/pantallas/ListaProveedores.js
+// ===============================================
+// Pantalla de ListaProveedores
+// ===============================================
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
-import { firestore } from '../servicios/firebase';
+import { firestore } from '../../servicios/firebase';
 
 export default function ListaProveedores({ navigation }) {
   const [proveedores, setProveedores] = useState([]);
   const [cargando, setCargando] = useState(true);
 
+<<<<<<< HEAD:src/pantallas/ListaProveedores.js
+=======
+  //Cargar proveedores en tiempo real desde Firestore
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/ListaProveedores.js
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('proveedores')
@@ -29,6 +36,7 @@ export default function ListaProveedores({ navigation }) {
     return () => unsubscribe();
   }, []);
 
+  //Ver detalles del proveedor seleccionado
   const verProveedor = (proveedor) => {
     navigation.navigate('GestionProveedores', { proveedor });
   };
@@ -44,7 +52,7 @@ export default function ListaProveedores({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Proveedores</Text>
+      <Text style={styles.titulo}>📋 Proveedores</Text>
 
       <FlatList
         data={proveedores}
@@ -64,7 +72,7 @@ export default function ListaProveedores({ navigation }) {
         style={styles.botonAgregar}
         onPress={() => navigation.navigate('AgregarProveedor')}
       >
-        <Text style={styles.textoBoton}>Agregar Proveedor</Text>
+        <Text style={styles.textoBoton}>➕ Agregar Proveedor</Text>
       </TouchableOpacity>
     </View>
   );
@@ -72,7 +80,7 @@ export default function ListaProveedores({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#fff5ee' },
-  titulo: { fontSize: 24, fontWeight: 'bold', color: '#e85d2e', marginBottom: 20 },
+  titulo: { fontSize: 24, fontWeight: 'bold', color: '#e85d2e', marginBottom: 20, textAlign: 'center' },
   item: {
     padding: 15,
     marginVertical: 8,

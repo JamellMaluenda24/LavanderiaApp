@@ -1,13 +1,20 @@
-// src/pantallas/AprobarPedidos.js
+// ===============================================
+// Pantalla de Aprobar Pedidos
+// ===============================================
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
-import { firestore } from '../servicios/firebase';
+import { firestore } from '../../servicios/firebase';
 
 export default function AprobarPedidos() {
   const [pedidos, setPedidos] = useState([]);
   const [cargando, setCargando] = useState(true);
 
+<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
   //Cargar de pedidos pendientes desde Firestore
+=======
+  // Cargar pedidos pendientes desde Firestore
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('pedidos')
@@ -31,6 +38,10 @@ export default function AprobarPedidos() {
     return () => unsubscribe();
   }, []);
 
+<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
+=======
+  // Aprobar pedido y actualizar inventario
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
   const aprobarPedido = async (pedidoId, insumos) => {
     try {
       const batch = firestore().batch();
@@ -53,30 +64,42 @@ export default function AprobarPedidos() {
         }
       }
 
+<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
   
+=======
+      // Cambiar estado del pedido
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
       const pedidoRef = firestore().collection('pedidos').doc(pedidoId);
       batch.update(pedidoRef, { estado: 'aprobado' });
 
       await batch.commit();
-      Alert.alert('✅ Pedido aprobado', 'El inventario se actualizó correctamente.');
+      Alert.alert('Pedido aprobado', 'El inventario se actualizó correctamente.');
     } catch (error) {
       console.error('Error al aprobar pedido:', error);
       Alert.alert('Error', 'No se pudo aprobar el pedido.');
     }
   };
 
+<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
 
+=======
+  // Rechazar pedido
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
   const rechazarPedido = async (pedidoId) => {
     try {
       await firestore().collection('pedidos').doc(pedidoId).update({ estado: 'rechazado' });
-      Alert.alert('❌ Pedido rechazado', 'El pedido ha sido rechazado.');
+      Alert.alert('Pedido rechazado', 'El pedido ha sido rechazado.');
     } catch (error) {
       console.error('Error al rechazar pedido:', error);
       Alert.alert('Error', 'No se pudo rechazar el pedido.');
     }
   };
 
+<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
 
+=======
+  // Pantalla de carga
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
   if (cargando) {
     return (
       <View style={styles.cargando}>
@@ -86,6 +109,7 @@ export default function AprobarPedidos() {
     );
   }
 
+  // Si no hay pedidos pendientes
   if (pedidos.length === 0) {
     return (
       <View style={styles.container}>
@@ -94,6 +118,7 @@ export default function AprobarPedidos() {
     );
   }
 
+  // Render principal
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Aprobar Pedidos</Text>
@@ -139,7 +164,11 @@ export default function AprobarPedidos() {
   );
 }
 
+<<<<<<< HEAD:src/pantallas/AprobarPedidos.js
 
+=======
+// Estilos visuales
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/AprobarPedidos.js
 const styles = StyleSheet.create({
   container: {
     flex: 1,

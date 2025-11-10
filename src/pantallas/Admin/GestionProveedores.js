@@ -1,6 +1,13 @@
+// ===============================================
+// Pantalla de Gestión de Proveedores
+// ===============================================
+
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
-import { firestore } from '../servicios/firebase';
+import { 
+  View, Text, StyleSheet, FlatList, TouchableOpacity, 
+  Alert, ActivityIndicator 
+} from 'react-native';
+import { firestore } from '../../servicios/firebase';
 
 export default function GestionProveedores({ route, navigation }) {
   const proveedor = route?.params?.proveedor;
@@ -15,7 +22,11 @@ export default function GestionProveedores({ route, navigation }) {
     );
   }
 
+<<<<<<< HEAD:src/pantallas/GestionProveedores.js
   //Cargar todos los pedidos aprobados por el admin
+=======
+  // Cargar todos los pedidos aprobados relacionados con el proveedor
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/GestionProveedores.js
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('pedidos')
@@ -40,12 +51,20 @@ export default function GestionProveedores({ route, navigation }) {
     return () => unsubscribe();
   }, [proveedor.id]);
 
+<<<<<<< HEAD:src/pantallas/GestionProveedores.js
 
+=======
+  // Editar proveedor
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/GestionProveedores.js
   const editarProveedor = () => {
     navigation.navigate('EditarProveedor', { proveedorId: proveedor.id });
   };
 
+<<<<<<< HEAD:src/pantallas/GestionProveedores.js
 
+=======
+  // Eliminar proveedor
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/GestionProveedores.js
   const eliminarProveedor = async () => {
     Alert.alert(
       'Confirmar eliminación',
@@ -82,23 +101,31 @@ export default function GestionProveedores({ route, navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>{proveedor.nombre}</Text>
-      <Text style={styles.subtexto}>{proveedor.telefono} | {proveedor.direccion}</Text>
+      <Text style={styles.subtexto}>
+        {proveedor.telefono} | {proveedor.direccion}
+      </Text>
 
       <FlatList
         data={pedidosAprobados}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.entrega}>
-            <Text style={styles.label}>📦 Pedido #{item.id}</Text>
-            <Text>Fecha: {new Date(item.fechaPedido?.toDate()).toLocaleDateString()}</Text>
+            <Text style={styles.label}>Pedido #{item.id}</Text>
+            <Text>
+              Fecha: {new Date(item.fechaPedido?.toDate()).toLocaleDateString()}
+            </Text>
             <Text>Estado: {item.estado}</Text>
             <Text style={styles.label}>Insumos:</Text>
             {item.insumos?.map((insumo, index) => (
-              <Text key={index}>• {insumo.nombre} — {insumo.cantidad} unidades</Text>
+              <Text key={index}>
+                • {insumo.nombre} — {insumo.cantidad} unidades
+              </Text>
             ))}
           </View>
         )}
-        ListEmptyComponent={<Text>No hay pedidos aprobados registrados para este proveedor.</Text>}
+        ListEmptyComponent={
+          <Text>No hay pedidos aprobados registrados para este proveedor.</Text>
+        }
       />
 
       <View style={styles.menuCRUD}>
@@ -120,6 +147,13 @@ const styles = StyleSheet.create({
   entrega: { padding: 12, marginVertical: 8, backgroundColor: '#ffebd6', borderRadius: 8 },
   label: { fontWeight: 'bold', color: '#333' },
   menuCRUD: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 15 },
-  botonCRUD: { backgroundColor: '#e85d2e', padding: 10, borderRadius: 8, flex: 1, marginHorizontal: 5, alignItems: 'center' },
+  botonCRUD: { 
+    backgroundColor: '#e85d2e', 
+    padding: 10, 
+    borderRadius: 8, 
+    flex: 1, 
+    marginHorizontal: 5, 
+    alignItems: 'center' 
+  },
   textoBoton: { color: '#fff', fontWeight: 'bold' },
 });

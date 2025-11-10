@@ -2,25 +2,25 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// Pantallas principales
-import InicioSesionPantalla from '../pantallas/InicioSesionPantalla';
-import RegistroPantalla from '../pantallas/RegistroPantalla';
-import InicioPantalla from '../pantallas/InicioPantalla';
+// ----------------- AUTENTICACIÓN -----------------
+import InicioSesionPantalla from '../pantallas/Auth/InicioSesionPantalla';
+import RegistroPantalla from '../pantallas/Auth/RegistroPantalla';
 
-// Pantallas del Operario
-import RegistroConsumoPantalla from '../pantallas/RegistroConsumoPantalla';
-import InventarioPantalla from '../pantallas/InventarioPantalla';
-import AlertasPantalla from '../pantallas/AlertasPantalla';
+// ----------------- OPERARIO -----------------
+import InicioPantalla from '../pantallas/Operario/InicioPantalla';
+import RegistroConsumoPantalla from '../pantallas/Operario/RegistroConsumoPantalla';
+import InventarioPantalla from '../pantallas/Operario/InventarioPantalla';
+import AlertasPantalla from '../pantallas/Operario/AlertasPantalla';
 
-// Pantallas del Administrador
-import AdminPantalla from '../pantallas/AdminPantalla';
-import ReportesInsumos from '../pantallas/ReportesInsumos';
-import ListaProveedores from '../pantallas/ListaProveedores';
-import AprobarPedidos from '../pantallas/AprobarPedidos';
-import AgregarProveedor from '../pantallas/AgregarProveedor';
-import GestionProveedores from '../pantallas/GestionProveedores';
-import EditarProveedor from '../pantallas/EditarProveedor';
-import InventarioAdmin from '../pantallas/InventarioAdmin';
+// ----------------- ADMINISTRADOR -----------------
+import AdminPantalla from '../pantallas/Admin/AdminPantalla';
+import InventarioAdmin from '../pantallas/Admin/InventarioAdmin';
+import GestionProveedores from '../pantallas/Admin/GestionProveedores';
+import ReportesInsumos from '../pantallas/Admin/ReportesInsumos';
+import ListaProveedores from '../pantallas/Admin/ListaProveedores';
+import AgregarProveedor from '../pantallas/Admin/AgregarProveedor';
+import EditarProveedor from '../pantallas/Admin/EditarProveedor';
+import AprobarPedidos from '../pantallas/Admin/AprobarPedidos';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +35,7 @@ export default function NavegacionApp() {
           headerTitleStyle: { fontWeight: 'bold' },
         }}
       >
-        {/* Sesión y registro */}
+        {/* 🔐 Autenticación */}
         <Stack.Screen
           name="InicioSesion"
           component={InicioSesionPantalla}
@@ -47,14 +47,12 @@ export default function NavegacionApp() {
           options={{ title: 'Registro' }}
         />
 
-        {/* Menú principal Operario */}
+        {/* 👷‍♂️ Operario */}
         <Stack.Screen
           name="Inicio"
           component={InicioPantalla}
           options={{ title: 'Inicio Operario' }}
         />
-
-        {/* Funciones del Operario */}
         <Stack.Screen
           name="RegistroConsumo"
           component={RegistroConsumoPantalla}
@@ -71,23 +69,21 @@ export default function NavegacionApp() {
           options={{ title: 'Ver Alertas' }}
         />
 
-        {/* Panel de administración */}
+        {/* 🧑‍💼 Administrador */}
         <Stack.Screen
           name="Admin"
           component={AdminPantalla}
           options={{ title: 'Panel de Administración' }}
         />
-
-        {/* Funcionalidades del Administrador */}
         <Stack.Screen
           name="InventarioAdmin"
           component={InventarioAdmin}
-          options={{ title: 'Inventario de insumos' }}
+          options={{ title: 'Inventario de Insumos' }}
         />
         <Stack.Screen
           name="GestionProveedores"
           component={GestionProveedores}
-          options={{ title: 'Gestión Proveedores' }}
+          options={{ title: 'Gestión de Proveedores' }}
         />
         <Stack.Screen
           name="ReportesInsumos"
@@ -97,23 +93,23 @@ export default function NavegacionApp() {
         <Stack.Screen
           name="ListaProveedores"
           component={ListaProveedores}
-          options={{ title: 'Lista Proveedores' }}
+          options={{ title: 'Lista de Proveedores' }}
         />
         <Stack.Screen
           name="AgregarProveedor"
           component={AgregarProveedor}
           options={{ title: 'Agregar Proveedor' }}
-        />  
+        />
         <Stack.Screen
           name="EditarProveedor"
           component={EditarProveedor}
-          options={{ title: 'Editar información de proveedor' }}
+          options={{ title: 'Editar Información de Proveedor' }}
         />
         <Stack.Screen
           name="AprobarPedidos"
           component={AprobarPedidos}
           options={{ title: 'Aprobar / Rechazar Pedidos' }}
-        />  
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

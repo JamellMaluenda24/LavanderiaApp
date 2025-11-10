@@ -1,12 +1,20 @@
+// ===============================================
+// Pantalla de Editar Proveedor
+// ===============================================
+
 import React, { useState, useEffect } from 'react';
 import { 
   View, Text, StyleSheet, TextInput, TouchableOpacity, 
   Alert, ScrollView, ActivityIndicator 
 } from 'react-native';
-import { firestore } from '../servicios/firebase';
+import { firestore } from '../../servicios/firebase';
 
 export default function EditarProveedor({ route, navigation }) {
+<<<<<<< HEAD:src/pantallas/EditarProveedor.js
   const { proveedorId } = route.params || {}; 
+=======
+  const { proveedorId } = route.params || {}; // evita crash si no hay params
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/EditarProveedor.js
 
   const [nombre, setNombre] = useState('');
   const [ciudad, setCiudad] = useState('');
@@ -58,10 +66,14 @@ export default function EditarProveedor({ route, navigation }) {
     try {
       await firestore().collection('proveedores').doc(proveedorId).set(
         { nombre, ciudad, direccion, telefono, correo },
+<<<<<<< HEAD:src/pantallas/EditarProveedor.js
         { merge: true } 
+=======
+        { merge: true } // actualiza o crea si no existe
+>>>>>>> 11db5cd (Mejora de diseño de las interfaces y se añaden comentarios):src/pantallas/Admin/EditarProveedor.js
       );
 
-      Alert.alert('✅ Éxito', 'Proveedor actualizado correctamente.');
+      Alert.alert('Éxito', 'Proveedor actualizado correctamente.');
       navigation.goBack();
     } catch (error) {
       console.error('Error al actualizar proveedor:', error);
@@ -124,8 +136,12 @@ export default function EditarProveedor({ route, navigation }) {
         placeholder="Correo electrónico"
       />
 
-      <TouchableOpacity style={styles.boton} onPress={guardarCambios}>
-        <Text style={styles.textoBoton}>Guardar Cambios</Text>
+      <TouchableOpacity style={styles.botonGuardar} onPress={guardarCambios}>
+        <Text style={styles.textoBotonGuardar}>Guardar Cambios</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.botonVolver} onPress={() => navigation.goBack()}>
+        <Text style={styles.textoBotonVolver}>Volver</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -133,10 +149,28 @@ export default function EditarProveedor({ route, navigation }) {
 
 const styles = StyleSheet.create({
   contenedor: { flexGrow: 1, padding: 20, backgroundColor: '#fff5ee' },
-  titulo: { fontSize: 24, fontWeight: 'bold', color: '#e85d2e', marginBottom: 20, textAlign: 'center' },
-  label: { fontSize: 16, fontWeight: 'bold', color: '#333', marginTop: 10, marginBottom: 5 },
-  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 8, padding: 12, backgroundColor: '#fff' },
-  boton: {
+  titulo: { 
+    fontSize: 24, 
+    fontWeight: 'bold', 
+    color: '#e85d2e', 
+    marginBottom: 20, 
+    textAlign: 'center' 
+  },
+  label: { 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    color: '#333', 
+    marginTop: 10, 
+    marginBottom: 5 
+  },
+  input: { 
+    borderWidth: 1, 
+    borderColor: '#ccc', 
+    borderRadius: 8, 
+    padding: 12, 
+    backgroundColor: '#fff' 
+  },
+  botonGuardar: {
     backgroundColor: '#e85d2e',
     borderRadius: 12,
     paddingVertical: 15,
@@ -148,6 +182,24 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 4,
   },
-  textoBoton: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
+  textoBotonGuardar: { 
+    color: '#fff', 
+    fontWeight: 'bold', 
+    fontSize: 16 
+  },
+  botonVolver: {
+    borderWidth: 1.5,
+    borderColor: '#e85d2e',
+    borderRadius: 12,
+    paddingVertical: 12,
+    marginTop: 20,
+    marginBottom: 30,
+  },
+  textoBotonVolver: {
+    textAlign: 'center',
+    color: '#e85d2e',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
   texto: { fontSize: 16, textAlign: 'center', marginVertical: 20 },
 });

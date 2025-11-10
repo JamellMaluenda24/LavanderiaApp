@@ -5,7 +5,6 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 
 export default function ReportesInsumos({ navigation }) {
   
-  // Función de ejemplo para generar reporte
   const generarReporte = (tipo) => {
     Alert.alert('Reporte generado', `Se generó el reporte ${tipo} de insumos.`);
 

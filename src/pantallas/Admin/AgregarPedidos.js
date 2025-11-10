@@ -1,3 +1,4 @@
+// Pantalla de Agregar Pedidos (admin) 
 
 import React, { useState } from 'react';
 import {
@@ -31,7 +32,7 @@ export default function AgregarPedidos() {
     }
 
     const nuevoInsumo = {
-      idInsumo: firestore().collection('inventario').doc().id, // ID único
+      idInsumo: firestore().collection('inventario').doc().id, 
       nombre: insumo,
       stock: parseInt(cantidad),
       unidad: unidad || 'unidad',
@@ -214,7 +215,6 @@ export default function AgregarPedidos() {
   );
 }
 
-// ESTILOS
 const styles = StyleSheet.create({
   container: { padding: 20, backgroundColor: '#fff5ee', flexGrow: 1 },
   titulo: { fontSize: 24, fontWeight: 'bold', color: '#e85d2e', textAlign: 'center', marginBottom: 30 },

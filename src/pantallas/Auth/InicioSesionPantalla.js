@@ -1,7 +1,6 @@
 
 // Pantalla de Inicio de Sesión
 
-
 import React, { useState } from 'react';
 import {
   View,
@@ -15,15 +14,13 @@ import {
 import { auth, firestore } from '../../servicios/firebase';
 
 export default function InicioSesionPantalla({ navigation }) {
-  // ESTADOS
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
-  const [cargando, setCargando] = useState(false); // Muestra el indicador de carga
+  const [cargando, setCargando] = useState(false); 
 
 
   // Maneja el inicio de sesión con Firebase
   const manejarInicioSesion = async () => {
-    // Verifica que los campos no estén vacíos
     if (!correo || !contrasena) {
       Alert.alert('Campos incompletos', 'Por favor ingresa correo y contraseña.');
       return;
@@ -157,16 +154,15 @@ export default function InicioSesionPantalla({ navigation }) {
   );
 }
 
-//ESTILOS VISUALES
 const estilos = StyleSheet.create({
   fondo: {
     flex: 1,
-    backgroundColor: '#f35b24', // Fondo naranja principal
+    backgroundColor: '#f35b24', 
     justifyContent: 'center',
     alignItems: 'center',
   },
   tarjeta: {
-    backgroundColor: '#fff', // Tarjeta blanca central
+    backgroundColor: '#fff', 
     width: '85%',
     borderRadius: 16,
     paddingVertical: 30,

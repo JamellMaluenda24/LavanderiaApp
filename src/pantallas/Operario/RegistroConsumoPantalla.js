@@ -1,7 +1,4 @@
-
 // Pantalla de Registro de Consumo
-
-
 import React, { useState } from 'react';
 import {
   View,
@@ -15,17 +12,12 @@ import {
 } from 'react-native';
 import { firestore, auth } from '../../servicios/firebase';
 
-
-// Componente principal
-
 export default function RegistroConsumoPantalla({ navigation }) {
-  // ESTADOS
-  const [proceso, setProceso] = useState('');   // Nombre del proceso (Lavado, Planchado, etc.)
-  const [insumo, setInsumo] = useState('');     // Insumo utilizado
-  const [cantidad, setCantidad] = useState(''); // Cantidad usada
 
+  const [proceso, setProceso] = useState('');  
+  const [insumo, setInsumo] = useState('');    
+  const [cantidad, setCantidad] = useState(''); 
 
-  // Valida los campos y almacena la información en Firestore.
   const registrarConsumo = async () => {
     if (!proceso || !insumo || !cantidad) {
       Alert.alert('Error', 'Por favor completa todos los campos.');
@@ -105,13 +97,10 @@ export default function RegistroConsumoPantalla({ navigation }) {
   );
 }
 
-
-// Estilos visuales
-
 const estilos = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#fff5ee', // Fondo principal claro
+    backgroundColor: '#fff5ee', 
   },
   container: {
     flexGrow: 1,

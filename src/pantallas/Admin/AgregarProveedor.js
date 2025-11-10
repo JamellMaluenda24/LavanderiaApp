@@ -1,3 +1,4 @@
+// Pantalla de Agregar Proveedor (admin) 
 
 import React, { useState } from 'react';
 import {
@@ -13,27 +14,23 @@ import {
 import { firestore } from '../../servicios/firebase';
 
 export default function AgregarProveedor() {
-  // ESTADOS
+
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [direccion, setDireccion] = useState('');
   const [ciudad, setCiudad] = useState('');
   const [correo, setCorreo] = useState('');
 
-  // Historial local de proveedores registrados en la sesión actual
   const [historial, setHistorial] = useState([]);
 
- 
-  // Registra un nuevo proveedor en Firestore y lo agrega al historial local
   const registrarProveedor = async () => {
-    // Validar que los campos obligatorios estén completos
+
     if (!nombre || !telefono || !direccion || !ciudad) {
       Alert.alert('Error', 'Debes completar todos los campos obligatorios.');
       return;
     }
 
     try {
-      // Crear objeto con los datos del proveedor
       const nuevoProveedor = {
         nombre,
         telefono,
@@ -43,15 +40,12 @@ export default function AgregarProveedor() {
         fechaRegistro: new Date().toLocaleDateString(),
       };
 
-      // Guardar en Firestore
       await firestore().collection('proveedores').add(nuevoProveedor);
 
-      // Agregar al historial local
       setHistorial(prev => [...prev, { id: Date.now().toString(), ...nuevoProveedor }]);
 
       Alert.alert('Éxito', `Proveedor "${nombre}" registrado correctamente.`);
 
-      // Limpiar campos del formulario
       setNombre('');
       setTelefono('');
       setDireccion('');
@@ -63,7 +57,6 @@ export default function AgregarProveedor() {
     }
   };
 
-  // INTERFAZ VISUAL
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Título principal */}
@@ -143,7 +136,6 @@ export default function AgregarProveedor() {
   );
 }
 
-//ESTILOS VISUALES
 const styles = StyleSheet.create({
   container: {
     padding: 20,

@@ -1,4 +1,4 @@
-
+// Pantalla de Inicio admin
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -18,7 +18,6 @@ export default function AdminPantalla({ navigation }) {
   const [esAdmin, setEsAdmin] = useState(false);
   const [usuarioDatos, setUsuarioDatos] = useState(null);
 
-  // VERIFICAR ROL Y OBTENER DATOS
   useEffect(() => {
     const verificarRol = async () => {
       try {
@@ -57,7 +56,6 @@ export default function AdminPantalla({ navigation }) {
     verificarRol();
   }, []);
 
-  //CERRAR SESIÓN
   const cerrarSesion = async () => {
     try {
       await auth().signOut();
@@ -69,7 +67,6 @@ export default function AdminPantalla({ navigation }) {
     }
   };
 
-  //ESTADO DE CARGA
   if (cargando) {
     return (
       <View style={estilos.cargando}>
@@ -81,7 +78,6 @@ export default function AdminPantalla({ navigation }) {
 
   if (!esAdmin) return null;
 
-  // INTERFAZ
   return (
     <SafeAreaView style={estilos.fondo}>
       <ScrollView contentContainerStyle={estilos.scroll}>

@@ -1,7 +1,6 @@
 
 // Pantalla Principal del Operario
 
-
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -111,9 +110,6 @@ export default function InicioPantalla({ navigation }) {
     </SafeAreaView>
   );
 }
-
-
-// ESTILOS
 
 const estilos = StyleSheet.create({
   fondo: {

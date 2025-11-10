@@ -1,7 +1,4 @@
-
 // Pantalla de Registro de Usuario
-
-
 
 import React, { useState } from 'react';
 import {
@@ -16,13 +13,11 @@ import {
 import { auth, firestore } from '../../servicios/firebase';
 
 export default function RegistroPantalla({ navigation }) {
-  // ------------------- ESTADOS -------------------
   const [nombre, setNombre] = useState(''); 
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [cargando, setCargando] = useState(false);
 
-  // ------------------- FUNCIÓN PRINCIPAL -------------------
   const manejarRegistro = async () => {
     if (!nombre || !correo || !contrasena) {
       Alert.alert('Campos incompletos', 'Por favor completa todos los campos.');
@@ -32,11 +27,9 @@ export default function RegistroPantalla({ navigation }) {
     setCargando(true);
 
     try {
-      // Crear el usuario en Firebase Authentication
       const credencial = await auth().createUserWithEmailAndPassword(correo, contrasena);
       const uid = credencial.user.uid;
 
-      // Guardar información adicional en Firestore
       await firestore().collection('usuarios').doc(uid).set({
         nombre: nombre.trim(),
         correo: correo.toLowerCase(),
@@ -72,7 +65,6 @@ export default function RegistroPantalla({ navigation }) {
     }
   };
 
-  // INTERFAZ VISUAL
   return (
     <View style={estilos.fondo}>
       <View style={estilos.tarjeta}>
@@ -132,7 +124,6 @@ export default function RegistroPantalla({ navigation }) {
   );
 }
 
-// ESTILOS
 const estilos = StyleSheet.create({
   fondo: {
     flex: 1,

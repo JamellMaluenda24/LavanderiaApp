@@ -1,4 +1,4 @@
-
+// Pantalla de Gestión Proveedor (admin) 
 
 import React, { useEffect, useState } from 'react';
 import { 
@@ -133,7 +133,6 @@ export default function GestionProveedores({ route, navigation }) {
   );
 }
 
-//ESTILOS
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#fff5ee' },
   titulo: { fontSize: 24, fontWeight: 'bold', color: '#e85d2e', marginBottom: 5 },

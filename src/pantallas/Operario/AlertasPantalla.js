@@ -1,7 +1,4 @@
-
 // Pantalla de Alertas de Inventario
-
-
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -14,16 +11,11 @@ import {
 } from 'react-native';
 import { firestore } from '../../servicios/firebase';
 
-
-// Componente principal
-
 export default function AlertasPantalla({ navigation }) {
-  // ESTADOS
-  const [alertas, setAlertas] = useState([]); // Lista de productos con bajo stock
-  const [cargando, setCargando] = useState(true); // Control de carga inicial
 
+  const [alertas, setAlertas] = useState([]); 
+  const [cargando, setCargando] = useState(true); 
 
-  // Escucha los cambios en la colección 'inventario' y filtra productos con cantidad <= 50.
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('inventario')
@@ -39,14 +31,13 @@ export default function AlertasPantalla({ navigation }) {
         setCargando(false);
       });
 
-    // Limpieza de suscripción al desmontar el componente
     return unsubscribe;
   }, []);
 
 
   const obtenerColorStock = cantidad => {
-    if (cantidad > 20) return '#ffb84d'; // Naranja/amarillo = bajo
-    return '#ff4d4d'; // Rojo = crítico
+    if (cantidad > 20) return '#ffb84d'; 
+    return '#ff4d4d'; 
   };
 
 
@@ -114,9 +105,6 @@ export default function AlertasPantalla({ navigation }) {
     </SafeAreaView>
   );
 }
-
-
-// Estilos de la interfaz
 
 const estilos = StyleSheet.create({
   safeArea: {

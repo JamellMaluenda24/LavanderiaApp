@@ -1,6 +1,4 @@
-
 // Pantalla de Inventario de Insumos
-
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -15,17 +13,12 @@ import {
 } from 'react-native';
 import { firestore } from '../../servicios/firebase';
 
-
-// Componente principal
-
 export default function InventarioPantalla({ navigation }) {
-  // ESTADOS
-  const [insumos, setInsumos] = useState([]); // Lista completa de insumos obtenidos desde Firestore
-  const [busqueda, setBusqueda] = useState(''); // Texto ingresado en el buscador
-  const [cargando, setCargando] = useState(true); // Control de estado de carga inicial
 
+  const [insumos, setInsumos] = useState([]);
+  const [busqueda, setBusqueda] = useState(''); 
+  const [cargando, setCargando] = useState(true); 
 
-  // Escucha la colección 'inventario' y actualiza la lista automáticamente ante cambios.
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('inventario')
@@ -38,24 +31,19 @@ export default function InventarioPantalla({ navigation }) {
         setCargando(false);
       });
 
-    // Limpieza de suscripción al desmontar el componente
     return unsubscribe;
   }, []);
 
-
-  // Retorna los insumos cuyo nombre contenga el texto ingresado (sin distinción de mayúsculas).
   const filtrarInsumos = () => {
     return insumos.filter(i =>
       i.nombre.toLowerCase().includes(busqueda.toLowerCase())
     );
   };
 
-
-  // Cambia el color según la cantidad disponible.
   const obtenerColorStock = cantidad => {
-    if (cantidad > 50) return '#4caf50'; // Verde = stock suficiente
-    if (cantidad > 20) return '#ffb84d'; // Amarillo = bajo
-    return '#ff4d4d'; // Rojo = crítico
+    if (cantidad > 50) return '#4caf50'; 
+    if (cantidad > 20) return '#ffb84d'; 
+    return '#ff4d4d';
   };
 
 
@@ -132,13 +120,10 @@ export default function InventarioPantalla({ navigation }) {
   );
 }
 
-
-// Estilos visuales
-
 const estilos = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#fff5ee', // Fondo principal claro
+    backgroundColor: '#fff5ee', 
   },
   container: {
     flex: 1,

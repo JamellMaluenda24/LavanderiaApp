@@ -1,6 +1,6 @@
-// ===============================================
+
 // Pantalla Principal del Operario
-// ===============================================
+
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -19,7 +19,7 @@ export default function InicioPantalla({ navigation }) {
   const [usuario, setUsuario] = useState(null);
   const [cargando, setCargando] = useState(true);
 
-  // ------------------ OBTENER DATOS DEL USUARIO ------------------
+
   useEffect(() => {
     const uid = auth().currentUser?.uid;
     if (!uid) return;
@@ -41,7 +41,7 @@ export default function InicioPantalla({ navigation }) {
     obtenerDatos();
   }, []);
 
-  // ------------------ CERRAR SESIÓN ------------------
+
   const cerrarSesion = async () => {
     try {
       await auth().signOut();
@@ -56,7 +56,7 @@ export default function InicioPantalla({ navigation }) {
     }
   };
 
-  // ------------------ INTERFAZ ------------------
+
   if (cargando) {
     return (
       <View style={estilos.cargando}>
@@ -112,9 +112,9 @@ export default function InicioPantalla({ navigation }) {
   );
 }
 
-// ===============================================
+
 // ESTILOS
-// ===============================================
+
 const estilos = StyleSheet.create({
   fondo: {
     flex: 1,

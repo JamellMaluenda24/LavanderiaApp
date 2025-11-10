@@ -1,6 +1,3 @@
-// ===============================================
-// Pantalla Principal del Administrador
-// ===============================================
 
 
 import React, { useEffect, useState } from 'react';
@@ -21,7 +18,7 @@ export default function AdminPantalla({ navigation }) {
   const [esAdmin, setEsAdmin] = useState(false);
   const [usuarioDatos, setUsuarioDatos] = useState(null);
 
-  // ------------------ VERIFICAR ROL Y OBTENER DATOS ------------------
+  // VERIFICAR ROL Y OBTENER DATOS
   useEffect(() => {
     const verificarRol = async () => {
       try {
@@ -60,7 +57,7 @@ export default function AdminPantalla({ navigation }) {
     verificarRol();
   }, []);
 
-  // ------------------ CERRAR SESIÓN ------------------
+  //CERRAR SESIÓN
   const cerrarSesion = async () => {
     try {
       await auth().signOut();
@@ -72,7 +69,7 @@ export default function AdminPantalla({ navigation }) {
     }
   };
 
-  // ------------------ ESTADO DE CARGA ------------------
+  //ESTADO DE CARGA
   if (cargando) {
     return (
       <View style={estilos.cargando}>
@@ -84,7 +81,7 @@ export default function AdminPantalla({ navigation }) {
 
   if (!esAdmin) return null;
 
-  // ------------------ INTERFAZ ------------------
+  // INTERFAZ
   return (
     <SafeAreaView style={estilos.fondo}>
       <ScrollView contentContainerStyle={estilos.scroll}>
@@ -121,9 +118,9 @@ export default function AdminPantalla({ navigation }) {
 
           <TouchableOpacity
             style={estilos.card}
-            onPress={() => navigation.navigate('AprobarPedidos')}
+            onPress={() => navigation.navigate('AgregarPedidos')}
           >
-            <Text style={estilos.textoCard}>Aprobar / Rechazar Pedidos</Text>
+            <Text style={estilos.textoCard}>Agregar Pedido</Text>
           </TouchableOpacity>
         </View>
 
@@ -136,9 +133,7 @@ export default function AdminPantalla({ navigation }) {
   );
 }
 
-// ===============================================
-// ESTILOS
-// ===============================================
+
 const estilos = StyleSheet.create({
   fondo: {
     flex: 1,

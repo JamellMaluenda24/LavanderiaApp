@@ -1,6 +1,6 @@
-// ===============================================
+
 // Pantalla de Inventario de Insumos
-// ===============================================
+
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -15,16 +15,16 @@ import {
 } from 'react-native';
 import { firestore } from '../../servicios/firebase';
 
-// -----------------------------------------------------------------------------
+
 // Componente principal
-// -----------------------------------------------------------------------------
+
 export default function InventarioPantalla({ navigation }) {
-  // ------------------- ESTADOS -------------------
+  // ESTADOS
   const [insumos, setInsumos] = useState([]); // Lista completa de insumos obtenidos desde Firestore
   const [busqueda, setBusqueda] = useState(''); // Texto ingresado en el buscador
   const [cargando, setCargando] = useState(true); // Control de estado de carga inicial
 
-  // ------------------- EFECTO: Suscripción en tiempo real -------------------
+
   // Escucha la colección 'inventario' y actualiza la lista automáticamente ante cambios.
   useEffect(() => {
     const unsubscribe = firestore()
@@ -42,7 +42,7 @@ export default function InventarioPantalla({ navigation }) {
     return unsubscribe;
   }, []);
 
-  // ------------------- FUNCIÓN: Filtrado de búsqueda -------------------
+
   // Retorna los insumos cuyo nombre contenga el texto ingresado (sin distinción de mayúsculas).
   const filtrarInsumos = () => {
     return insumos.filter(i =>
@@ -50,7 +50,7 @@ export default function InventarioPantalla({ navigation }) {
     );
   };
 
-  // ------------------- FUNCIÓN: Determinar color de stock -------------------
+
   // Cambia el color según la cantidad disponible.
   const obtenerColorStock = cantidad => {
     if (cantidad > 50) return '#4caf50'; // Verde = stock suficiente
@@ -58,7 +58,7 @@ export default function InventarioPantalla({ navigation }) {
     return '#ff4d4d'; // Rojo = crítico
   };
 
-  // ------------------- RENDER: Pantalla de carga -------------------
+
   if (cargando) {
     return (
       <View style={estilos.cargando}>
@@ -68,7 +68,7 @@ export default function InventarioPantalla({ navigation }) {
     );
   }
 
-  // ------------------- RENDER: Contenido principal -------------------
+
   return (
     <SafeAreaView style={estilos.safeArea}>
       <View style={estilos.container}>
@@ -132,9 +132,9 @@ export default function InventarioPantalla({ navigation }) {
   );
 }
 
-// -----------------------------------------------------------------------------
+
 // Estilos visuales
-// -----------------------------------------------------------------------------
+
 const estilos = StyleSheet.create({
   safeArea: {
     flex: 1,

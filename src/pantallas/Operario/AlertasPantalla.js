@@ -1,6 +1,6 @@
-// ===============================================
+
 // Pantalla de Alertas de Inventario
-// ===============================================
+
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -14,15 +14,15 @@ import {
 } from 'react-native';
 import { firestore } from '../../servicios/firebase';
 
-// -----------------------------------------------------------------------------
+
 // Componente principal
-// -----------------------------------------------------------------------------
+
 export default function AlertasPantalla({ navigation }) {
-  // ------------------- ESTADOS -------------------
+  // ESTADOS
   const [alertas, setAlertas] = useState([]); // Lista de productos con bajo stock
   const [cargando, setCargando] = useState(true); // Control de carga inicial
 
-  // ------------------- EFECTO: Suscripción a Firestore -------------------
+
   // Escucha los cambios en la colección 'inventario' y filtra productos con cantidad <= 50.
   useEffect(() => {
     const unsubscribe = firestore()
@@ -43,13 +43,13 @@ export default function AlertasPantalla({ navigation }) {
     return unsubscribe;
   }, []);
 
-  // ------------------- FUNCIÓN: Determinar color según nivel de stock -------------------
+
   const obtenerColorStock = cantidad => {
     if (cantidad > 20) return '#ffb84d'; // Naranja/amarillo = bajo
     return '#ff4d4d'; // Rojo = crítico
   };
 
-  // ------------------- RENDER: Pantalla de carga -------------------
+
   if (cargando) {
     return (
       <View style={estilos.cargando}>
@@ -59,7 +59,7 @@ export default function AlertasPantalla({ navigation }) {
     );
   }
 
-  // ------------------- RENDER: Contenido principal -------------------
+
   return (
     <SafeAreaView style={estilos.safeArea}>
       <View style={estilos.container}>
@@ -115,9 +115,9 @@ export default function AlertasPantalla({ navigation }) {
   );
 }
 
-// -----------------------------------------------------------------------------
+
 // Estilos de la interfaz
-// -----------------------------------------------------------------------------
+
 const estilos = StyleSheet.create({
   safeArea: {
     flex: 1,

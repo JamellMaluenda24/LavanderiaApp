@@ -1,6 +1,4 @@
-// ===============================================
-// Pantalla de Agregar Proveedor
-// ===============================================
+
 import React, { useState } from 'react';
 import {
   View,
@@ -15,8 +13,7 @@ import {
 import { firestore } from '../../servicios/firebase';
 
 export default function AgregarProveedor() {
-  // ------------------- ESTADOS -------------------
-  // Campos de formulario del nuevo proveedor
+  // ESTADOS
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [direccion, setDireccion] = useState('');
@@ -26,7 +23,7 @@ export default function AgregarProveedor() {
   // Historial local de proveedores registrados en la sesión actual
   const [historial, setHistorial] = useState([]);
 
-  // ------------------- FUNCIÓN PRINCIPAL -------------------
+ 
   // Registra un nuevo proveedor en Firestore y lo agrega al historial local
   const registrarProveedor = async () => {
     // Validar que los campos obligatorios estén completos
@@ -66,7 +63,7 @@ export default function AgregarProveedor() {
     }
   };
 
-  // ------------------- INTERFAZ VISUAL -------------------
+  // INTERFAZ VISUAL
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Título principal */}
@@ -146,7 +143,7 @@ export default function AgregarProveedor() {
   );
 }
 
-// ################################## ESTILOS VISUALES ##################################
+//ESTILOS VISUALES
 const styles = StyleSheet.create({
   container: {
     padding: 20,

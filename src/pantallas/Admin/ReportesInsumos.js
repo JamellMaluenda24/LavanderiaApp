@@ -1,6 +1,4 @@
-// ===============================================
-// Pantalla de ReportesInsumos
-// ===============================================
+
 
 // src/pantallas/ReportesInsumos.js
 import React from 'react';

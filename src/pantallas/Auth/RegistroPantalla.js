@@ -1,6 +1,6 @@
-// ===============================================
+
 // Pantalla de Registro de Usuario
-// ===============================================
+
 
 
 import React, { useState } from 'react';
@@ -72,7 +72,7 @@ export default function RegistroPantalla({ navigation }) {
     }
   };
 
-  // ------------------- INTERFAZ VISUAL -------------------
+  // INTERFAZ VISUAL
   return (
     <View style={estilos.fondo}>
       <View style={estilos.tarjeta}>
@@ -132,7 +132,7 @@ export default function RegistroPantalla({ navigation }) {
   );
 }
 
-// ################################## ESTILOS ##################################
+// ESTILOS
 const estilos = StyleSheet.create({
   fondo: {
     flex: 1,

@@ -1,6 +1,4 @@
-// ===============================================
-// Pantalla de Inventario de Insumos (Administrador)
-// ===============================================
+
 
 import React, { useState, useEffect } from 'react';
 import { 

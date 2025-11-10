@@ -1,6 +1,4 @@
-// ===============================================
-// Pantalla de Gestión de Proveedores
-// ===============================================
+
 
 import React, { useEffect, useState } from 'react';
 import { 
@@ -22,7 +20,7 @@ export default function GestionProveedores({ route, navigation }) {
     );
   }
 
-  // Cargar todos los pedidos aprobados relacionados con el proveedor
+
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('pedidos')
@@ -30,7 +28,7 @@ export default function GestionProveedores({ route, navigation }) {
       .where('estado', '==', 'aprobado')
       .onSnapshot(
         (snapshot) => {
-          const data = snapshot.docs.map(doc => ({
+          const data = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
           }));
@@ -47,12 +45,12 @@ export default function GestionProveedores({ route, navigation }) {
     return () => unsubscribe();
   }, [proveedor.id]);
 
-  // Editar proveedor
+
   const editarProveedor = () => {
     navigation.navigate('EditarProveedor', { proveedorId: proveedor.id });
   };
 
-  // Eliminar proveedor
+
   const eliminarProveedor = async () => {
     Alert.alert(
       'Confirmar eliminación',
@@ -77,71 +75,96 @@ export default function GestionProveedores({ route, navigation }) {
     );
   };
 
+
   if (cargando) {
     return (
-      <View style={styles.container}>
+      <View style={styles.cargando}>
         <ActivityIndicator size="large" color="#e85d2e" />
-        <Text>Cargando pedidos aprobados...</Text>
+        <Text style={styles.textoCargando}>Cargando pedidos aprobados...</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
+      {/* Información principal del proveedor */}
       <Text style={styles.titulo}>{proveedor.nombre}</Text>
       <Text style={styles.subtexto}>
-        {proveedor.telefono} | {proveedor.direccion}
+        {proveedor.telefono || 'Sin teléfono'} | {proveedor.direccion || 'Sin dirección'}
       </Text>
+
+      {/* Lista de pedidos aprobados */}
+      <Text style={styles.subtitulo}>Pedidos aprobados</Text>
 
       <FlatList
         data={pedidosAprobados}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.entrega}>
-            <Text style={styles.label}>Pedido #{item.id}</Text>
-            <Text>
-              Fecha: {new Date(item.fechaPedido?.toDate()).toLocaleDateString()}
-            </Text>
-            <Text>Estado: {item.estado}</Text>
+            <Text style={styles.label}>📦 Pedido #{item.id}</Text>
+            <Text>📅 Fecha: {item.fechaPedido || 'Sin fecha'}</Text>
+            <Text>🟢 Estado: {item.estado}</Text>
+
             <Text style={styles.label}>Insumos:</Text>
-            {item.insumos?.map((insumo, index) => (
-              <Text key={index}>
-                • {insumo.nombre} — {insumo.cantidad} unidades
+            {item.Insumos?.map((insumo, index) => (
+              <Text key={index} style={styles.insumo}>
+                • {insumo.nombre} — {insumo.stock} {insumo.unidad || 'unidades'}
               </Text>
             ))}
           </View>
         )}
         ListEmptyComponent={
-          <Text>No hay pedidos aprobados registrados para este proveedor.</Text>
+          <Text style={styles.vacio}>
+            No hay pedidos aprobados registrados para este proveedor.
+          </Text>
         }
       />
 
+      {/* Botones CRUD */}
       <View style={styles.menuCRUD}>
         <TouchableOpacity style={styles.botonCRUD} onPress={editarProveedor}>
-          <Text style={styles.textoBoton}>Editar</Text>
+          <Text style={styles.textoBoton}> Editar</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.botonCRUD} onPress={eliminarProveedor}>
-          <Text style={styles.textoBoton}>Eliminar</Text>
+          <Text style={styles.textoBoton}> Eliminar</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 }
 
+//ESTILOS
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#fff5ee' },
   titulo: { fontSize: 24, fontWeight: 'bold', color: '#e85d2e', marginBottom: 5 },
   subtexto: { fontSize: 14, color: '#555', marginBottom: 15 },
-  entrega: { padding: 12, marginVertical: 8, backgroundColor: '#ffebd6', borderRadius: 8 },
-  label: { fontWeight: 'bold', color: '#333' },
+  subtitulo: { fontSize: 18, fontWeight: 'bold', color: '#e85d2e', marginBottom: 10 },
+  entrega: {
+    padding: 12,
+    marginVertical: 8,
+    backgroundColor: '#ffebd6',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#e85d2e33',
+  },
+  label: { fontWeight: 'bold', color: '#333', marginTop: 5 },
+  insumo: { fontSize: 15, color: '#333', marginLeft: 10 },
+  vacio: { textAlign: 'center', color: '#777', marginTop: 20 },
+  cargando: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff5ee',
+  },
+  textoCargando: { marginTop: 10, color: '#555' },
   menuCRUD: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 15 },
-  botonCRUD: { 
-    backgroundColor: '#e85d2e', 
-    padding: 10, 
-    borderRadius: 8, 
-    flex: 1, 
-    marginHorizontal: 5, 
-    alignItems: 'center' 
+  botonCRUD: {
+    backgroundColor: '#e85d2e',
+    padding: 10,
+    borderRadius: 8,
+    flex: 1,
+    marginHorizontal: 5,
+    alignItems: 'center',
   },
   textoBoton: { color: '#fff', fontWeight: 'bold' },
 });

@@ -1,6 +1,6 @@
-// ===============================================
+
 // Pantalla de Inicio de Sesión
-// ===============================================
+
 
 import React, { useState } from 'react';
 import {
@@ -15,13 +15,12 @@ import {
 import { auth, firestore } from '../../servicios/firebase';
 
 export default function InicioSesionPantalla({ navigation }) {
-  // ------------------- ESTADOS -------------------
-  // Variables para guardar los datos ingresados por el usuario
+  // ESTADOS
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [cargando, setCargando] = useState(false); // Muestra el indicador de carga
 
-  // ------------------- FUNCIÓN PRINCIPAL -------------------
+
   // Maneja el inicio de sesión con Firebase
   const manejarInicioSesion = async () => {
     // Verifica que los campos no estén vacíos
@@ -93,7 +92,7 @@ export default function InicioSesionPantalla({ navigation }) {
     }
   };
 
-  // ------------------- INTERFAZ VISUAL -------------------
+  //INTERFAZ VISUAL
   return (
     <View style={estilos.fondo}>
       {/* Contenedor tipo tarjeta blanca */}
@@ -158,7 +157,7 @@ export default function InicioSesionPantalla({ navigation }) {
   );
 }
 
-// ################################## ESTILOS VISUALES ##################################
+//ESTILOS VISUALES
 const estilos = StyleSheet.create({
   fondo: {
     flex: 1,

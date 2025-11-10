@@ -2,17 +2,17 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// ----------------- AUTENTICACIÓN -----------------
+//AUTENTICACIÓN
 import InicioSesionPantalla from '../pantallas/Auth/InicioSesionPantalla';
 import RegistroPantalla from '../pantallas/Auth/RegistroPantalla';
 
-// ----------------- OPERARIO -----------------
+//OPERARIO
 import InicioPantalla from '../pantallas/Operario/InicioPantalla';
 import RegistroConsumoPantalla from '../pantallas/Operario/RegistroConsumoPantalla';
 import InventarioPantalla from '../pantallas/Operario/InventarioPantalla';
 import AlertasPantalla from '../pantallas/Operario/AlertasPantalla';
 
-// ----------------- ADMINISTRADOR -----------------
+//ADMINISTRADOR
 import AdminPantalla from '../pantallas/Admin/AdminPantalla';
 import InventarioAdmin from '../pantallas/Admin/InventarioAdmin';
 import GestionProveedores from '../pantallas/Admin/GestionProveedores';
@@ -20,7 +20,8 @@ import ReportesInsumos from '../pantallas/Admin/ReportesInsumos';
 import ListaProveedores from '../pantallas/Admin/ListaProveedores';
 import AgregarProveedor from '../pantallas/Admin/AgregarProveedor';
 import EditarProveedor from '../pantallas/Admin/EditarProveedor';
-import AprobarPedidos from '../pantallas/Admin/AprobarPedidos';
+import AgregarPedidos from '../pantallas/Admin/AgregarPedidos';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +36,7 @@ export default function NavegacionApp() {
           headerTitleStyle: { fontWeight: 'bold' },
         }}
       >
-        {/* 🔐 Autenticación */}
+        {/* Autenticación */}
         <Stack.Screen
           name="InicioSesion"
           component={InicioSesionPantalla}
@@ -47,7 +48,7 @@ export default function NavegacionApp() {
           options={{ title: 'Registro' }}
         />
 
-        {/* 👷‍♂️ Operario */}
+        {/* Operario */}
         <Stack.Screen
           name="Inicio"
           component={InicioPantalla}
@@ -69,7 +70,7 @@ export default function NavegacionApp() {
           options={{ title: 'Ver Alertas' }}
         />
 
-        {/* 🧑‍💼 Administrador */}
+        {/* Administrador */}
         <Stack.Screen
           name="Admin"
           component={AdminPantalla}
@@ -106,9 +107,9 @@ export default function NavegacionApp() {
           options={{ title: 'Editar Información de Proveedor' }}
         />
         <Stack.Screen
-          name="AprobarPedidos"
-          component={AprobarPedidos}
-          options={{ title: 'Aprobar / Rechazar Pedidos' }}
+          name="AgregarPedidos"
+          component={AgregarPedidos}
+          options={{ title: 'Agregar Pedidos' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

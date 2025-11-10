@@ -1,3 +1,4 @@
+// Pantalla de Editar Proveedor (admin) 
 
 import React, { useState, useEffect } from 'react';
 import { 

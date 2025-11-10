@@ -1,6 +1,5 @@
+// Pantalla de ReportesInsumos
 
-
-// src/pantallas/ReportesInsumos.js
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 

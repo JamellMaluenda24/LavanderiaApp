@@ -1,3 +1,4 @@
+// Pantalla de Lista Proveedores (admin) 
 
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';

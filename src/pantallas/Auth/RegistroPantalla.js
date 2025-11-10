@@ -17,7 +17,7 @@ import { auth, firestore } from '../../servicios/firebase';
 
 export default function RegistroPantalla({ navigation }) {
   // ------------------- ESTADOS -------------------
-  const [nombre, setNombre] = useState(''); // Nuevo campo: nombre completo
+  const [nombre, setNombre] = useState(''); 
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [cargando, setCargando] = useState(false);

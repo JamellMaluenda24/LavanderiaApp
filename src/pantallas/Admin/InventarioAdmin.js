@@ -1,4 +1,4 @@
-
+// Pantalla de Inventario  (admin) 
 
 import React, { useState, useEffect } from 'react';
 import { 
@@ -9,7 +9,7 @@ import { firestore } from '../../servicios/firebase';
 export default function InventarioAdmin() {
   const [inventario, setInventario] = useState([]);
 
-  // Escuchar inventario en tiempo real desde Firestore
+  // Ver inventario en tiempo real desde Firestore
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('inventario')

@@ -15,7 +15,7 @@ export default function GestionProveedores({ route, navigation }) {
     );
   }
 
-  // 🔄 Cargar todos los pedidos aprobados relacionados con el proveedor
+  //Cargar todos los pedidos aprobados por el admin
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('pedidos')
@@ -40,12 +40,12 @@ export default function GestionProveedores({ route, navigation }) {
     return () => unsubscribe();
   }, [proveedor.id]);
 
-  // ✏️ Editar proveedor
+
   const editarProveedor = () => {
     navigation.navigate('EditarProveedor', { proveedorId: proveedor.id });
   };
 
-  // 🗑️ Eliminar proveedor
+
   const eliminarProveedor = async () => {
     Alert.alert(
       'Confirmar eliminación',

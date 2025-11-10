@@ -7,7 +7,6 @@ export default function ListaProveedores({ navigation }) {
   const [proveedores, setProveedores] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  // 📡 Cargar proveedores en tiempo real desde Firestore
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('proveedores')

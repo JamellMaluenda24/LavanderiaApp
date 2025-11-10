@@ -1,5 +1,4 @@
 // Pantalla: Alertas de Inventario
-// Muestra los productos cuyo stock está bajo en Firestore (menor o igual a 50 unidades).
 // Escucha los cambios en tiempo real y actualiza la lista automáticamente.
 
 import React, { useEffect, useState } from 'react';

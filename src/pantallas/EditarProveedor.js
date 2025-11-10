@@ -6,7 +6,7 @@ import {
 import { firestore } from '../servicios/firebase';
 
 export default function EditarProveedor({ route, navigation }) {
-  const { proveedorId } = route.params || {}; // ✅ evita crash si no hay params
+  const { proveedorId } = route.params || {}; 
 
   const [nombre, setNombre] = useState('');
   const [ciudad, setCiudad] = useState('');
@@ -58,7 +58,7 @@ export default function EditarProveedor({ route, navigation }) {
     try {
       await firestore().collection('proveedores').doc(proveedorId).set(
         { nombre, ciudad, direccion, telefono, correo },
-        { merge: true } // ✅ actualiza o crea si no existe
+        { merge: true } 
       );
 
       Alert.alert('✅ Éxito', 'Proveedor actualizado correctamente.');

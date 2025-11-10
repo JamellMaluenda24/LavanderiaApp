@@ -35,7 +35,6 @@ export default function AgregarProveedor() {
 
       Alert.alert('Éxito', `Proveedor "${nombre}" registrado correctamente.`);
 
-      // Limpiar campos
       setNombre('');
       setTelefono('');
       setDireccion('');

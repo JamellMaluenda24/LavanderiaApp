@@ -6,7 +6,6 @@ import { firestore } from '../servicios/firebase';
 export default function InventarioAdmin() {
   const [inventario, setInventario] = useState([]);
 
-  // 📦 Escuchar inventario en tiempo real desde Firestore
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('inventario')
@@ -18,7 +17,7 @@ export default function InventarioAdmin() {
           }));
           setInventario(data);
 
-          // 🔔 Mostrar alerta si hay insumos bajo el mínimo
+          //Mostrar alerta si hay insumos bajo el mínimo
           const bajos = data.filter(item => item.stock <= (item.minimo || 2));
           if (bajos.length > 0) {
             const nombres = bajos.map(i => i.nombre).join(', ');
@@ -34,7 +33,7 @@ export default function InventarioAdmin() {
     return () => unsubscribe();
   }, []);
 
-  // ➕ Aumentar stock manualmente
+  //Aumentar stock manualmente
   const aumentarStock = async (id, stockActual) => {
     try {
       await firestore().collection('inventario').doc(id).update({
@@ -46,7 +45,7 @@ export default function InventarioAdmin() {
     }
   };
 
-  // ➖ Disminuir stock manualmente
+  //Disminuir stock manualmente
   const disminuirStock = async (id, stockActual) => {
     if (stockActual <= 0) return;
     try {

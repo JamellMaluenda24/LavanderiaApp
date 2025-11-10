@@ -7,7 +7,7 @@ export default function AprobarPedidos() {
   const [pedidos, setPedidos] = useState([]);
   const [cargando, setCargando] = useState(true);
 
-  // 🔄 Cargar pedidos pendientes desde Firestore
+  //Cargar de pedidos pendientes desde Firestore
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('pedidos')
@@ -31,7 +31,6 @@ export default function AprobarPedidos() {
     return () => unsubscribe();
   }, []);
 
-  // ✅ Aprobar pedido y actualizar inventario
   const aprobarPedido = async (pedidoId, insumos) => {
     try {
       const batch = firestore().batch();
@@ -54,7 +53,7 @@ export default function AprobarPedidos() {
         }
       }
 
-      // ✅ Cambiar estado del pedido
+  
       const pedidoRef = firestore().collection('pedidos').doc(pedidoId);
       batch.update(pedidoRef, { estado: 'aprobado' });
 
@@ -66,7 +65,7 @@ export default function AprobarPedidos() {
     }
   };
 
-  // ❌ Rechazar pedido
+
   const rechazarPedido = async (pedidoId) => {
     try {
       await firestore().collection('pedidos').doc(pedidoId).update({ estado: 'rechazado' });
@@ -77,7 +76,7 @@ export default function AprobarPedidos() {
     }
   };
 
-  // 🔁 Renderizado principal
+
   if (cargando) {
     return (
       <View style={styles.cargando}>
@@ -140,7 +139,7 @@ export default function AprobarPedidos() {
   );
 }
 
-// 🎨 Estilos
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

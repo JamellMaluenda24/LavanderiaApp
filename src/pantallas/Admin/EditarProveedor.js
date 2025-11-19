@@ -60,7 +60,7 @@ export default function EditarProveedor({ route, navigation }) {
     try {
       await firestore().collection('proveedores').doc(proveedorId).set(
         { nombre, ciudad, direccion, telefono, correo },
-        { merge: true } // actualiza o crea si no existe
+        { merge: true } 
       );
 
       Alert.alert('Éxito', 'Proveedor actualizado correctamente.');

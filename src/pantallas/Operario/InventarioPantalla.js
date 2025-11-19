@@ -1,5 +1,3 @@
-// Pantalla de Inventario de Insumos
-
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -36,16 +34,16 @@ export default function InventarioPantalla({ navigation }) {
 
   const filtrarInsumos = () => {
     return insumos.filter(i =>
-      i.nombre.toLowerCase().includes(busqueda.toLowerCase())
+      (i.nombre || '').toLowerCase().includes(busqueda.toLowerCase())
     );
   };
 
-  const obtenerColorStock = cantidad => {
-    if (cantidad > 50) return '#4caf50'; 
-    if (cantidad > 20) return '#ffb84d'; 
-    return '#ff4d4d';
+  const obtenerColorStock = (cantidad) => {
+    const num = Number(cantidad) || 0;  
+    if (num > 50) return '#4caf50';     
+    if (num > 15) return '#ffb84d';     
+    return '#ff4d4d';                  
   };
-
 
   if (cargando) {
     return (
@@ -56,14 +54,11 @@ export default function InventarioPantalla({ navigation }) {
     );
   }
 
-
   return (
     <SafeAreaView style={estilos.safeArea}>
       <View style={estilos.container}>
-        {/* Título principal */}
         <Text style={estilos.titulo}>Inventario de Insumos</Text>
 
-        {/* Campo de búsqueda */}
         <TextInput
           placeholder="Buscar insumo..."
           placeholderTextColor="#999"
@@ -72,43 +67,45 @@ export default function InventarioPantalla({ navigation }) {
           style={estilos.input}
         />
 
-        {/* Lista de insumos (filtrada en tiempo real) */}
         <FlatList
           data={filtrarInsumos()}
           keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <View style={estilos.item}>
-              <View style={estilos.itemInfo}>
-                <Text style={estilos.itemNombre}>{item.nombre}</Text>
-                <Text style={estilos.itemCantidad}>
-                  Cantidad:{' '}
-                  <Text
-                    style={{
-                      color: obtenerColorStock(item.cantidad),
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {item.cantidad}
-                  </Text>
-                </Text>
-              </View>
+          renderItem={({ item }) => {
+            const cantidad = Number(item.stock ?? 0);   
+            const colorStock = obtenerColorStock(cantidad);
 
-              {/* Indicador de color del stock */}
-              <View
-                style={[
-                  estilos.indicador,
-                  { backgroundColor: obtenerColorStock(item.cantidad) },
-                ]}
-              />
-            </View>
-          )}
+            return (
+              <View style={estilos.item}>
+                <View style={estilos.itemInfo}>
+                  <Text style={estilos.itemNombre}>{item.nombre}</Text>
+                  <Text style={estilos.itemCantidad}>
+                    Cantidad:{' '}
+                    <Text
+                      style={{
+                        color: colorStock,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {cantidad}
+                    </Text>
+                  </Text>
+                </View>
+
+                <View
+                  style={[
+                    estilos.indicador,
+                    { backgroundColor: colorStock },
+                  ]}
+                />
+              </View>
+            );
+          }}
           ListEmptyComponent={
             <Text style={estilos.vacio}>No hay insumos registrados.</Text>
           }
           contentContainerStyle={{ paddingBottom: 100 }}
         />
 
-        {/* Botón para volver a la pantalla anterior */}
         <TouchableOpacity
           style={estilos.botonVolver}
           onPress={() => navigation.goBack()}

@@ -1,4 +1,3 @@
-// Pantalla de Alertas de Inventario
 import React, { useEffect, useState } from 'react';
 import {
   View,
@@ -20,26 +19,30 @@ export default function AlertasPantalla({ navigation }) {
     const unsubscribe = firestore()
       .collection('inventario')
       .onSnapshot(snapshot => {
-        const lista = snapshot.docs
-          .map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-          }))
-          .filter(item => item.cantidad <= 50);
+        const lista = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-        setAlertas(lista);
+
+        const enRojo = lista.filter(item => {
+          const stock = Number(item.stock ?? 0);
+          return stock <= 15;
+        });
+
+        setAlertas(enRojo);
         setCargando(false);
       });
 
     return unsubscribe;
   }, []);
 
-
-  const obtenerColorStock = cantidad => {
-    if (cantidad > 20) return '#ffb84d'; 
-    return '#ff4d4d'; 
+  const obtenerColorStock = (cantidad) => {
+    const num = Number(cantidad) || 0;
+    if (num > 50) return '#4caf50';   
+    if (num > 20) return '#ffb84d';   
+    return '#ff4d4d';                 
   };
-
 
   if (cargando) {
     return (
@@ -50,43 +53,46 @@ export default function AlertasPantalla({ navigation }) {
     );
   }
 
-
   return (
     <SafeAreaView style={estilos.safeArea}>
       <View style={estilos.container}>
         <Text style={estilos.titulo}>Alertas de Inventario</Text>
 
-        {/* Lista de productos en alerta o mensaje vacío */}
         {alertas.length === 0 ? (
           <Text style={estilos.vacio}>Todo el inventario está en niveles óptimos.</Text>
         ) : (
           <FlatList
             data={alertas}
             keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <View style={estilos.item}>
-                <View style={estilos.itemInfo}>
-                  <Text style={estilos.itemNombre}>{item.nombre}</Text>
-                  <Text style={estilos.itemCantidad}>
-                    Cantidad actual:{' '}
-                    <Text
-                      style={{
-                        color: obtenerColorStock(item.cantidad),
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      {item.cantidad}
+            renderItem={({ item }) => {
+              const cantidad = Number(item.stock ?? 0); 
+              const colorStock = obtenerColorStock(cantidad);
+
+              return (
+                <View style={estilos.item}>
+                  <View style={estilos.itemInfo}>
+                    <Text style={estilos.itemNombre}>{item.nombre}</Text>
+                    <Text style={estilos.itemCantidad}>
+                      Cantidad actual:{' '}
+                      <Text
+                        style={{
+                          color: colorStock,
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {cantidad}
+                      </Text>
                     </Text>
-                  </Text>
+                  </View>
+                  <View
+                    style={[
+                      estilos.indicador,
+                      { backgroundColor: colorStock },
+                    ]}
+                  />
                 </View>
-                <View
-                  style={[
-                    estilos.indicador,
-                    { backgroundColor: obtenerColorStock(item.cantidad) },
-                  ]}
-                />
-              </View>
-            )}
+              );
+            }}
             ListEmptyComponent={
               <Text style={estilos.vacio}>No hay alertas disponibles.</Text>
             }
@@ -94,7 +100,6 @@ export default function AlertasPantalla({ navigation }) {
           />
         )}
 
-        {/* Botón para volver a la pantalla anterior */}
         <TouchableOpacity
           style={estilos.botonVolver}
           onPress={() => navigation.goBack()}

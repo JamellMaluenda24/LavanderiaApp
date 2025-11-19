@@ -1,4 +1,6 @@
-// Pantalla de Inventario  (admin) 
+// ===============================================
+// Pantalla de Inventario (admin)
+// ===============================================
 
 import React, { useState, useEffect } from 'react';
 import { 
@@ -8,6 +10,7 @@ import { firestore } from '../../servicios/firebase';
 
 export default function InventarioAdmin() {
   const [inventario, setInventario] = useState([]);
+
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('inventario')
@@ -37,29 +40,7 @@ export default function InventarioAdmin() {
     return () => unsubscribe();
   }, []);
 
-  const aumentarStock = async (id, stockActual) => {
-    try {
-      await firestore().collection('inventario').doc(id).update({
-        stock: stockActual + 1,
-      });
-    } catch (error) {
-      console.error('Error al aumentar stock:', error);
-      Alert.alert('Error', 'No se pudo actualizar el stock.');
-    }
-  };
-
-  const disminuirStock = async (id, stockActual) => {
-    if (stockActual <= 0) return;
-    try {
-      await firestore().collection('inventario').doc(id).update({
-        stock: stockActual - 1,
-      });
-    } catch (error) {
-      console.error('Error al disminuir stock:', error);
-      Alert.alert('Error', 'No se pudo actualizar el stock.');
-    }
-  };
-
+  // === YA NO EXISTEN LOS BOTONES, SOLO VISUALIZACIÓN ===
   const renderItem = ({ item }) => (
     <View style={[styles.item, item.stock <= (item.minimo || 2) && styles.alerta]}>
       <View style={{ flex: 1 }}>
@@ -68,20 +49,7 @@ export default function InventarioAdmin() {
           Stock: {item.stock} {item.unidad || ''} (Mínimo: {item.minimo || 2})
         </Text>
       </View>
-      <View style={styles.botones}>
-        <TouchableOpacity
-          style={[styles.boton, { backgroundColor: '#f44336' }]}
-          onPress={() => disminuirStock(item.id, item.stock)}
-        >
-          <Text style={styles.textoBoton}>−</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.boton, { backgroundColor: '#4CAF50' }]}
-          onPress={() => aumentarStock(item.id, item.stock)}
-        >
-          <Text style={styles.textoBoton}>＋</Text>
-        </TouchableOpacity>
-      </View>
+      {/* ← Se eliminaron los botones de aumentar y disminuir */}
     </View>
   );
 
@@ -122,13 +90,5 @@ const styles = StyleSheet.create({
   },
   nombre: { fontSize: 18, fontWeight: 'bold', color: '#333' },
   stock: { fontSize: 14, color: '#555' },
-  botones: { flexDirection: 'row', marginLeft: 10 },
-  boton: {
-    borderRadius: 6,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginHorizontal: 5,
-  },
-  textoBoton: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
   vacio: { textAlign: 'center', fontSize: 16, color: '#777', marginTop: 20 },
 });

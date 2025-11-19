@@ -1,6 +1,6 @@
-// Pantalla de Agregar Pedidos (admin) 
 
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,67 +10,83 @@ import {
   Alert,
   ScrollView,
   FlatList,
+  Modal,
 } from 'react-native';
 import { firestore } from '../../servicios/firebase';
 
-
 export default function AgregarPedidos() {
 
-  const [proveedor, setProveedor] = useState('');
+  
+  const [proveedorId, setProveedorId] = useState('');
+  const [proveedorNombre, setProveedorNombre] = useState('');
+  const [listaProveedores, setListaProveedores] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const [insumo, setInsumo] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [unidad, setUnidad] = useState('');
-  const [precio, setPrecio] = useState('');
   const [listaInsumos, setListaInsumos] = useState([]);
+
+
   const [historial, setHistorial] = useState([]);
 
 
+  useEffect(() => {
+    const cargarProveedores = async () => {
+      try {
+        const snap = await firestore().collection('proveedores').get();
+
+        const lista = snap.docs.map(doc => {
+          const datos = doc.data();
+          return {
+            id: doc.id,
+            nombre: datos.nombre || 'Sin nombre',
+          };
+        });
+
+        setListaProveedores(lista);
+      } catch (error) {
+        console.error('Error al cargar proveedores:', error);
+        Alert.alert('Error', 'No se pudieron cargar los proveedores.');
+      }
+    };
+
+    cargarProveedores();
+  }, []);
+
   const agregarInsumo = () => {
-    if (!insumo || !cantidad || !precio) {
-      Alert.alert('Campos incompletos', 'Agrega nombre, cantidad y precio del insumo.');
+    if (!insumo || !cantidad) {
+      Alert.alert('Campos incompletos', 'Debes ingresar el nombre y la cantidad del insumo.');
       return;
     }
 
     const nuevoInsumo = {
-      idInsumo: firestore().collection('inventario').doc().id, 
+      idInsumo: firestore().collection('inventario').doc().id,
       nombre: insumo,
       stock: parseInt(cantidad),
       unidad: unidad || 'unidad',
-      subtotal: parseInt(precio) * parseInt(cantidad),
     };
 
     setListaInsumos(prev => [...prev, nuevoInsumo]);
+
+ 
     setInsumo('');
     setCantidad('');
     setUnidad('');
-    setPrecio('');
   };
 
 
   const registrarPedido = async () => {
-    if (!proveedor || listaInsumos.length === 0) {
-      Alert.alert('Error', 'Debes ingresar el proveedor y al menos un insumo.');
+    if (!proveedorId || listaInsumos.length === 0) {
+      Alert.alert('Error', 'Debes seleccionar un proveedor y agregar al menos un insumo.');
       return;
     }
 
     try {
 
-      const provSnap = await firestore()
-        .collection('proveedores')
-        .where('nombre', '==', proveedor)
-        .get();
+      const totalPedido = listaInsumos.reduce((acc, item) => acc + (item.stock || 0), 0);
 
-      if (provSnap.empty) {
-        Alert.alert('Proveedor no encontrado', 'No existe un proveedor con ese nombre.');
-        return;
-      }
-
-      const proveedorDoc = provSnap.docs[0];
-      const proveedorId = proveedorDoc.id;
-
-      const totalPedido = listaInsumos.reduce((acc, item) => acc + item.subtotal, 0);
-
-
+ 
       await firestore().collection('pedidos').add({
         idProveedor: proveedorId,
         estado: 'aprobado',
@@ -79,16 +95,13 @@ export default function AgregarPedidos() {
         Insumos: listaInsumos,
       });
 
-
       for (const item of listaInsumos) {
-
         const querySnap = await firestore()
           .collection('inventario')
           .where('nombre', '==', item.nombre)
           .get();
 
         if (!querySnap.empty) {
-
           const docExistente = querySnap.docs[0];
           const datos = docExistente.data();
           const nuevoStock = (datos.stock || 0) + parseInt(item.stock);
@@ -96,7 +109,6 @@ export default function AgregarPedidos() {
             stock: nuevoStock,
           });
         } else {
-
           await firestore().collection('inventario').add({
             nombre: item.nombre,
             stock: parseInt(item.stock),
@@ -106,20 +118,17 @@ export default function AgregarPedidos() {
       }
 
 
-
-
-
       const nuevoPedido = {
         id: Date.now().toString(),
-        proveedor,
-        insumos: listaInsumos,
+        proveedorNombre,
         total: totalPedido,
         fecha: new Date().toLocaleDateString(),
       };
       setHistorial(prev => [...prev, nuevoPedido]);
 
-      Alert.alert('✅ Éxito', 'Pedido registrado correctamente.');
-      setProveedor('');
+      Alert.alert('Éxito', 'Pedido registrado correctamente.');
+      setProveedorId('');
+      setProveedorNombre('');
       setListaInsumos([]);
     } catch (error) {
       console.error('Error al registrar pedido:', error);
@@ -132,13 +141,55 @@ export default function AgregarPedidos() {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.titulo}>Agregar Pedido</Text>
 
-      <Text style={styles.label}>Nombre del proveedor *</Text>
-      <TextInput
+
+      <Text style={styles.label}>Proveedor *</Text>
+      <TouchableOpacity
         style={styles.input}
-        placeholder="Ej: Limpieza Total"
-        value={proveedor}
-        onChangeText={setProveedor}
-      />
+        onPress={() => setModalVisible(true)}
+        activeOpacity={0.7}
+      >
+        <Text style={{ color: proveedorNombre ? '#000' : '#999' }}>
+          {proveedorNombre || 'Selecciona un proveedor'}
+        </Text>
+      </TouchableOpacity>
+
+      <Modal
+        visible={modalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitulo}>Seleccionar proveedor</Text>
+
+            <FlatList
+              data={listaProveedores}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.modalItem}
+                  onPress={() => {
+                    setProveedorId(item.id);
+                    setProveedorNombre(item.nombre);   
+                    setModalVisible(false);
+                  }}
+                >
+                  <Text style={styles.modalItemTexto}>{item.nombre}</Text>
+                </TouchableOpacity>
+              )}
+            />
+
+            <TouchableOpacity
+              style={styles.modalCerrar}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.modalCerrarTexto}>Cerrar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
 
       <Text style={styles.subtitulo}>Insumos del pedido</Text>
 
@@ -159,21 +210,12 @@ export default function AgregarPedidos() {
         onChangeText={setCantidad}
       />
 
-      <Text style={styles.label}>Unidad *</Text>
+      <Text style={styles.label}>Unidad</Text>
       <TextInput
         style={styles.input}
         placeholder="Ej: L, kg, unidades"
         value={unidad}
         onChangeText={setUnidad}
-      />
-
-      <Text style={styles.label}>Precio por unidad *</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Ej: 500"
-        keyboardType="numeric"
-        value={precio}
-        onChangeText={setPrecio}
       />
 
       <TouchableOpacity style={styles.botonSecundario} onPress={agregarInsumo}>
@@ -184,7 +226,7 @@ export default function AgregarPedidos() {
         <View style={styles.listaInsumos}>
           {listaInsumos.map((item, i) => (
             <Text key={i} style={styles.insumoTexto}>
-              • {item.nombre} — {item.stock} {item.unidad} — ${item.subtotal}
+              • {item.nombre} — {item.stock} {item.unidad}
             </Text>
           ))}
         </View>
@@ -193,6 +235,7 @@ export default function AgregarPedidos() {
       <TouchableOpacity style={styles.boton} onPress={registrarPedido}>
         <Text style={styles.textoBoton}>Guardar Pedido</Text>
       </TouchableOpacity>
+
 
       <Text style={styles.subtitulo}>Pedidos agregados esta sesión</Text>
 
@@ -205,7 +248,7 @@ export default function AgregarPedidos() {
           renderItem={({ item }) => (
             <View style={styles.historialItem}>
               <Text style={styles.historialTexto}>
-                {item.fecha} - {item.proveedor} (${item.total})
+                {item.fecha} - {item.proveedorNombre} (Total unidades: {item.total})
               </Text>
             </View>
           )}
@@ -217,16 +260,102 @@ export default function AgregarPedidos() {
 
 const styles = StyleSheet.create({
   container: { padding: 20, backgroundColor: '#fff5ee', flexGrow: 1 },
-  titulo: { fontSize: 24, fontWeight: 'bold', color: '#e85d2e', textAlign: 'center', marginBottom: 30 },
-  label: { fontSize: 15, fontWeight: 'bold', color: '#e85d2e', marginBottom: 5, marginTop: 10 },
-  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 10, padding: 12, backgroundColor: '#fff' },
-  boton: { backgroundColor: '#e85d2e', borderRadius: 12, paddingVertical: 15, marginVertical: 20, alignItems: 'center' },
-  botonSecundario: { backgroundColor: '#ffa76a', borderRadius: 10, paddingVertical: 12, alignItems: 'center', marginTop: 10 },
+  titulo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#e85d2e',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  label: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: '#e85d2e',
+    marginBottom: 5,
+    marginTop: 10,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    padding: 12,
+    backgroundColor: '#fff',
+  },
+  boton: {
+    backgroundColor: '#e85d2e',
+    borderRadius: 12,
+    paddingVertical: 15,
+    marginVertical: 20,
+    alignItems: 'center',
+  },
+  botonSecundario: {
+    backgroundColor: '#ffa76a',
+    borderRadius: 10,
+    paddingVertical: 12,
+    alignItems: 'center',
+    marginTop: 10,
+  },
   textoBoton: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
-  listaInsumos: { backgroundColor: '#ffebd6', padding: 12, borderRadius: 10, marginTop: 10 },
+  listaInsumos: {
+    backgroundColor: '#ffebd6',
+    padding: 12,
+    borderRadius: 10,
+    marginTop: 10,
+  },
   insumoTexto: { fontSize: 15, color: '#333' },
-  subtitulo: { fontSize: 18, fontWeight: 'bold', color: '#e85d2e', marginTop: 15, marginBottom: 10 },
+  subtitulo: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#e85d2e',
+    marginTop: 15,
+    marginBottom: 10,
+  },
   noHistorial: { fontSize: 16, color: '#333', fontStyle: 'italic' },
-  historialItem: { backgroundColor: '#ffebd6', padding: 12, borderRadius: 10, marginBottom: 8 },
+  historialItem: {
+    backgroundColor: '#ffebd6',
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 8,
+  },
   historialTexto: { fontSize: 15, color: '#333' },
+
+  // ----- MODAL -----
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: '85%',
+    maxHeight: '70%',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 15,
+  },
+  modalTitulo: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#e85d2e',
+  },
+  modalItem: {
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  modalItemTexto: {
+    fontSize: 16,
+    color: '#333',
+  },
+  modalCerrar: {
+    marginTop: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  modalCerrarTexto: {
+    fontSize: 16,
+    color: '#e85d2e',
+    fontWeight: 'bold',
+  },
 });

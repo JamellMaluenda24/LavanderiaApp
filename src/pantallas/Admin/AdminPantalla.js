@@ -1,4 +1,4 @@
-// Pantalla de Inicio admin
+
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -83,13 +83,13 @@ export default function AdminPantalla({ navigation }) {
       <ScrollView contentContainerStyle={estilos.scroll}>
         <Text style={estilos.titulo}>Panel de Administración</Text>
 
-        {/* Información del administrador */}
+ 
         <View style={estilos.tarjetaUsuario}>
           <Text style={estilos.nombre}>{usuarioDatos?.nombre || 'Administrador'}</Text>
           <Text style={estilos.correo}>{usuarioDatos?.correo}</Text>
         </View>
 
-        {/* MENÚ PRINCIPAL */}
+    
         <View style={estilos.menu}>
           <TouchableOpacity
             style={estilos.card}

@@ -1,5 +1,5 @@
 
-// Pantalla de Inicio de Sesión
+
 
 import React, { useState } from 'react';
 import {
@@ -19,24 +19,24 @@ export default function InicioSesionPantalla({ navigation }) {
   const [cargando, setCargando] = useState(false); 
 
 
-  // Maneja el inicio de sesión con Firebase
+
   const manejarInicioSesion = async () => {
     if (!correo || !contrasena) {
       Alert.alert('Campos incompletos', 'Por favor ingresa correo y contraseña.');
       return;
     }
 
-    setCargando(true); // Muestra spinner mientras se valida
+    setCargando(true); 
 
     try {
-      // Inicia sesión con Firebase Authentication
-      const credenciales = await auth().signInWithEmailAndPassword(correo, contrasena);
-      const uid = credenciales.user.uid; // ID único del usuario
 
-      // Busca los datos del usuario en Firestore
+      const credenciales = await auth().signInWithEmailAndPassword(correo, contrasena);
+      const uid = credenciales.user.uid; 
+
+
       const docUsuario = await firestore().collection('usuarios').doc(uid).get();
 
-      // Si no existe en la base de datos
+
       if (!docUsuario.exists) {
         Alert.alert(
           'Usuario no registrado',
@@ -48,14 +48,14 @@ export default function InicioSesionPantalla({ navigation }) {
 
       const datos = docUsuario.data();
 
-      // Verifica si la cuenta está activa
+
       if (datos.activo === false) {
         Alert.alert('Cuenta inactiva', 'Tu usuario ha sido desactivado por un administrador.');
         await auth().signOut();
         return;
       }
 
-      // Redirección según el rol del usuario
+
       if (datos.rol === 'admin') {
         Alert.alert('Bienvenido Administrador', 'Accediendo al panel de administración...');
         navigation.replace('Admin');
@@ -64,7 +64,7 @@ export default function InicioSesionPantalla({ navigation }) {
         navigation.replace('Inicio');
       }
     } catch (error) {
-      // Manejo de errores comunes de Firebase
+
       console.error('Error al iniciar sesión:', error);
 
       if (error?.code) {
@@ -85,21 +85,20 @@ export default function InicioSesionPantalla({ navigation }) {
         Alert.alert('Error', 'Ocurrió un problema al iniciar sesión.');
       }
     } finally {
-      setCargando(false); // Oculta el spinner
+      setCargando(false); 
     }
   };
 
-  //INTERFAZ VISUAL
   return (
     <View style={estilos.fondo}>
-      {/* Contenedor tipo tarjeta blanca */}
+
       <View style={estilos.tarjeta}>
 
-        {/* Título principal */}
+
         <Text style={estilos.titulo}>Bienvenido</Text>
         <Text style={estilos.subtitulo}>Ingresa a tu cuenta</Text>
 
-        {/* Campo de correo */}
+
         <TextInput
           placeholder="usuario@ejemplo.com"
           placeholderTextColor="#aaa"
@@ -110,7 +109,7 @@ export default function InicioSesionPantalla({ navigation }) {
           autoCapitalize="none"
         />
 
-        {/* Campo de contraseña */}
+
         <TextInput
           placeholder="Contraseña"
           placeholderTextColor="#aaa"
@@ -120,23 +119,23 @@ export default function InicioSesionPantalla({ navigation }) {
           secureTextEntry
         />
 
-        {/* Línea con “Recordarme” y “¿Olvidaste tu contraseña?” */}
+
         <View style={estilos.fila}>
           <Text style={estilos.textoRecordarme}>Recordarme</Text>
 
-          {/* Aquí se puede agregar una función futura para recuperar contraseña */}
+
           <TouchableOpacity>
             <Text style={estilos.textoOlvido}>¿Olvidaste tu contraseña?</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Botón principal */}
+
         <TouchableOpacity
           style={[estilos.botonPrincipal, cargando && { opacity: 0.7 }]}
           onPress={manejarInicioSesion}
           disabled={cargando}
         >
-          {/* Muestra el spinner mientras carga */}
+ 
           {cargando ? (
             <ActivityIndicator color="#fff" />
           ) : (
@@ -144,7 +143,7 @@ export default function InicioSesionPantalla({ navigation }) {
           )}
         </TouchableOpacity>
 
-        {/* Enlace para registrarse */}
+
         <Text style={estilos.textoInferior}>¿No tienes cuenta?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Registro')}>
           <Text style={estilos.registrate}>Regístrate como Operario</Text>

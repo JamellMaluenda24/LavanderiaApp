@@ -1,5 +1,4 @@
 
-// Pantalla Principal del Operario
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -70,7 +69,7 @@ export default function InicioPantalla({ navigation }) {
       <ScrollView contentContainerStyle={estilos.scroll}>
         <Text style={estilos.titulo}>Panel del Operario</Text>
 
-        {/* Datos del usuario */}
+
         <View style={estilos.tarjetaUsuario}>
           <View style={estilos.datosUsuario}>
             <Text style={estilos.nombre}>{usuario?.nombre || 'Usuario'}</Text>
@@ -78,7 +77,7 @@ export default function InicioPantalla({ navigation }) {
           </View>
         </View>
 
-        {/* MENÚ PRINCIPAL */}
+
         <View style={estilos.menu}>
           <TouchableOpacity
             style={estilos.card}
@@ -102,7 +101,6 @@ export default function InicioPantalla({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* BOTÓN DE CERRAR SESIÓN */}
         <TouchableOpacity style={estilos.botonSalir} onPress={cerrarSesion}>
           <Text style={estilos.textoBotonSalir}>Cerrar Sesión</Text>
         </TouchableOpacity>

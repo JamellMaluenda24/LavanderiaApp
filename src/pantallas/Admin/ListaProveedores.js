@@ -45,7 +45,7 @@ export default function ListaProveedores({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>📋 Proveedores</Text>
+      <Text style={styles.titulo}>Proveedores</Text>
 
       <FlatList
         data={proveedores}
@@ -65,7 +65,7 @@ export default function ListaProveedores({ navigation }) {
         style={styles.botonAgregar}
         onPress={() => navigation.navigate('AgregarProveedor')}
       >
-        <Text style={styles.textoBoton}>➕ Agregar Proveedor</Text>
+        <Text style={styles.textoBoton}> Agregar Proveedor</Text>
       </TouchableOpacity>
     </View>
   );

@@ -1,4 +1,4 @@
-// Pantalla de Registro de Consumo
+
 import React, { useState } from 'react';
 import {
   View,
@@ -49,10 +49,10 @@ export default function RegistroConsumoPantalla({ navigation }) {
   return (
     <SafeAreaView style={estilos.safeArea}>
       <ScrollView contentContainerStyle={estilos.container}>
-        {/* Título principal */}
+
         <Text style={estilos.titulo}>Registro de Consumo</Text>
 
-        {/* Campo: Proceso */}
+
         <TextInput
           placeholder="Proceso (Lavado, Planchado, etc.)"
           placeholderTextColor="#999"
@@ -61,7 +61,7 @@ export default function RegistroConsumoPantalla({ navigation }) {
           style={estilos.input}
         />
 
-        {/* Campo: Insumo */}
+
         <TextInput
           placeholder="Insumo utilizado"
           placeholderTextColor="#999"
@@ -70,7 +70,7 @@ export default function RegistroConsumoPantalla({ navigation }) {
           style={estilos.input}
         />
 
-        {/* Campo: Cantidad */}
+
         <TextInput
           placeholder="Cantidad usada"
           placeholderTextColor="#999"
@@ -80,12 +80,12 @@ export default function RegistroConsumoPantalla({ navigation }) {
           style={estilos.input}
         />
 
-        {/* Botón: Registrar */}
+
         <TouchableOpacity style={estilos.botonRegistrar} onPress={registrarConsumo}>
           <Text style={estilos.textoBotonRegistrar}>Registrar Consumo</Text>
         </TouchableOpacity>
 
-        {/* Botón: Volver */}
+
         <TouchableOpacity
           style={estilos.botonVolver}
           onPress={() => navigation.goBack()}

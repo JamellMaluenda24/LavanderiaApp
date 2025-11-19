@@ -1,4 +1,3 @@
-// Pantalla de Agregar Proveedor (admin) 
 
 import React, { useState } from 'react';
 import {
@@ -59,10 +58,10 @@ export default function AgregarProveedor() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* Título principal */}
+
       <Text style={styles.titulo}>Agregar Proveedor</Text>
 
-      {/* Campo: Nombre */}
+
       <Text style={styles.label}>Nombre del proveedor *</Text>
       <TextInput
         style={styles.input}
@@ -71,7 +70,7 @@ export default function AgregarProveedor() {
         onChangeText={setNombre}
       />
 
-      {/* Campo: Ciudad */}
+
       <Text style={styles.label}>Ciudad *</Text>
       <TextInput
         style={styles.input}
@@ -80,7 +79,7 @@ export default function AgregarProveedor() {
         onChangeText={setCiudad}
       />
 
-      {/* Campo: Dirección */}
+
       <Text style={styles.label}>Dirección *</Text>
       <TextInput
         style={styles.input}
@@ -89,7 +88,7 @@ export default function AgregarProveedor() {
         onChangeText={setDireccion}
       />
 
-      {/* Campo: Teléfono */}
+
       <Text style={styles.label}>Teléfono *</Text>
       <TextInput
         style={styles.input}
@@ -99,7 +98,7 @@ export default function AgregarProveedor() {
         keyboardType="phone-pad"
       />
 
-      {/* Campo: Correo (opcional) */}
+
       <Text style={styles.label}>Correo electrónico (opcional)</Text>
       <TextInput
         style={styles.input}
@@ -109,12 +108,12 @@ export default function AgregarProveedor() {
         keyboardType="email-address"
       />
 
-      {/* Botón principal para guardar */}
+
       <TouchableOpacity style={styles.boton} onPress={registrarProveedor}>
         <Text style={styles.textoBoton}>Guardar Proveedor</Text>
       </TouchableOpacity>
 
-      {/* Sección del historial local */}
+
       <Text style={styles.subtitulo}>Proveedores agregados esta sesión</Text>
 
       {historial.length === 0 ? (

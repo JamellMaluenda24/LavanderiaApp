@@ -1,4 +1,4 @@
-// Pantalla de Registro de Usuario
+
 
 import React, { useState } from 'react';
 import {
@@ -71,7 +71,7 @@ export default function RegistroPantalla({ navigation }) {
         <Text style={estilos.titulo}>Crear Cuenta</Text>
         <Text style={estilos.subtitulo}>Regístrate como nuevo operario</Text>
 
-        {/* Campo de nombre completo */}
+
         <TextInput
           placeholder="Nombre completo (Ej: Juan Pérez)"
           placeholderTextColor="#aaa"
@@ -80,7 +80,6 @@ export default function RegistroPantalla({ navigation }) {
           style={estilos.entrada}
         />
 
-        {/* Campo de correo electrónico */}
         <TextInput
           placeholder="usuario@ejemplo.com"
           placeholderTextColor="#aaa"
@@ -91,7 +90,6 @@ export default function RegistroPantalla({ navigation }) {
           autoCapitalize="none"
         />
 
-        {/* Campo de contraseña */}
         <TextInput
           placeholder="Contraseña"
           placeholderTextColor="#aaa"
@@ -101,7 +99,7 @@ export default function RegistroPantalla({ navigation }) {
           secureTextEntry
         />
 
-        {/* Botón principal */}
+
         <TouchableOpacity
           style={[estilos.botonPrincipal, cargando && { opacity: 0.7 }]}
           onPress={manejarRegistro}
@@ -114,7 +112,7 @@ export default function RegistroPantalla({ navigation }) {
           )}
         </TouchableOpacity>
 
-        {/* Enlace para volver al inicio de sesión */}
+
         <Text style={estilos.textoInferior}>¿Ya tienes una cuenta?</Text>
         <TouchableOpacity onPress={() => navigation.navigate('InicioSesion')}>
           <Text style={estilos.registrate}>Inicia sesión aquí</Text>

@@ -1,4 +1,4 @@
-// Pantalla de Gestión Proveedor (admin) 
+
 
 import React, { useEffect, useState } from 'react';
 import { 
@@ -87,13 +87,13 @@ export default function GestionProveedores({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* Información principal del proveedor */}
+
       <Text style={styles.titulo}>{proveedor.nombre}</Text>
       <Text style={styles.subtexto}>
         {proveedor.telefono || 'Sin teléfono'} | {proveedor.direccion || 'Sin dirección'}
       </Text>
 
-      {/* Lista de pedidos aprobados */}
+
       <Text style={styles.subtitulo}>Pedidos aprobados</Text>
 
       <FlatList
@@ -120,7 +120,6 @@ export default function GestionProveedores({ route, navigation }) {
         }
       />
 
-      {/* Botones CRUD */}
       <View style={styles.menuCRUD}>
         <TouchableOpacity style={styles.botonCRUD} onPress={editarProveedor}>
           <Text style={styles.textoBoton}> Editar</Text>

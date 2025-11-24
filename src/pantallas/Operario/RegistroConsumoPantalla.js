@@ -32,7 +32,7 @@ export default function RegistroConsumoPantalla({ navigation }) {
         insumo,
         cantidad: Number(cantidad),
         fecha: new Date(),
-        usuario: usuario?.email || 'desconocido',
+        usuario: usuario?.correo || 'desconocido',
       });
 
       Alert.alert('Registro exitoso', 'El consumo ha sido registrado correctamente.');
